@@ -45,8 +45,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 A simple DSP library written in C++ with the aim of learning everything audio development related.
 
 ### Built With
