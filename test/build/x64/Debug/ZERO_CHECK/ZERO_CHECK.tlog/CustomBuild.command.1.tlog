@@ -1,0 +1,10 @@
+^C:\USERS\HAMIS\DOCUMENTS\DEV\AUDIODEVELOPMENT\LETSLEARNDSP\TEST\BUILD\CMAKEFILES\F2B453F19E0B32536D9E68EE0054ABBD\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hamis/Documents/Dev/AudioDevelopment/LetsLearnDSP/test -BC:/Users/hamis/Documents/Dev/AudioDevelopment/LetsLearnDSP/test/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/hamis/Documents/Dev/AudioDevelopment/LetsLearnDSP/test/build/AUDIO_PLUGIN_EXAMPLE.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

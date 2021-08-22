@@ -1,0 +1,10 @@
+^C:\USERS\HAMIS\DOCUMENTS\DEV\AUDIODEVELOPMENT\LETSLEARNDSP\TEST\BUILD\JUCE\TOOLS\CMAKEFILES\D130F2B542B99A7C45E0462746A35772\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hamis/Documents/Dev/AudioDevelopment/LetsLearnDSP/test/JUCE -BC:/Users/hamis/Documents/Dev/AudioDevelopment/LetsLearnDSP/test/build/JUCE/tools --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/hamis/Documents/Dev/AudioDevelopment/LetsLearnDSP/test/build/JUCE/tools/JUCE.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,0 +1,16 @@
+\begin{theindex}
+
+  \item {C:/Users/hamis/Documents/Dev/AudioDevelopment/LetsLearnDSP/src/lldsp.h}, 
+		\hyperpage{3, 4}
+
+  \indexspace
+
+  \item {lldsp.h}
+    \subitem {tanhDistortion}, \hyperpage{3}
+
+  \indexspace
+
+  \item {tanhDistortion}
+    \subitem {lldsp.h}, \hyperpage{3}
+
+\end{theindex}

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hamis\Documents\Dev\AudioDevelopment\LetsLearnDSP\test\build\JUCE\tools\CMakeFiles\f3562825c8375a8b88c7baa22f3a853e\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B85192E9-520F-3592-839C-8F244A60EF82}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
