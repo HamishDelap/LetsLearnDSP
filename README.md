@@ -4,10 +4,10 @@
 <br />
 <p align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="logo1.png" alt="Logo" width="200" height="200">
+    <img src="logo.png" alt="Logo" width="200" height="200">
   </a>
 
-  <h2 align="center"> LetsLearnDSP </h2>
+  <h2 align="center">LetsLearnDSP</h2>
 
   <p align="center">
     A simple DSP library because why not?
