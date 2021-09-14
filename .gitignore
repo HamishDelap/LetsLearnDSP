@@ -35,3 +35,8 @@
 .code-workspace
 
 .vscode/
+test/build.bat
+test/build/.cmake/api/v1/reply/index-2021-08-22T21-00-32-0154.json
+test/build/.cmake/api/v1/reply/index-2021-09-14T16-34-38-0976.json
+test/build/AudioPluginExample.dir/Debug/AudioPlu.F0CF8350.tlog/CL.command.1.tlog
+test/build/AudioPluginExample.dir/Debug/AudioPlu.F0CF8350.tlog/CL.read.1.tlog

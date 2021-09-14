@@ -11,9 +11,11 @@
  * @param gain 
  * @return float 
  */
-float tanhDistortion(float sample, float gain) {
-    return std::tanh(sample * gain);
+namespace lldsp{
+    
+    float tanhDistortion(float sample, float gain) {
+        return std::tanh(sample * gain);
+    }
+    
 }
-
-
 #endif
