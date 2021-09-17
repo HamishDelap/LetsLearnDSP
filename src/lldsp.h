@@ -13,9 +13,10 @@
  */
 namespace lldsp{
     
-    float tanhDistortion(float sample, float gain) {
+    static float tanhDistortion(float sample, float gain) {
         return std::tanh(sample * gain);
     }
     
 }
+
 #endif

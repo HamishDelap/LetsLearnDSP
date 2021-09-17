@@ -1,6 +1,6 @@
+
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "../src/lldsp.h"
 
 //==============================================================================
 AudioPluginAudioProcessor::AudioPluginAudioProcessor()
@@ -14,7 +14,9 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
                   )
 {
 }
-
+{
+    
+}
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
 {
 }
@@ -89,6 +91,7 @@ void AudioPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    oscillator.setSampleRate(sampleRate);
     juce::ignoreUnused (sampleRate, samplesPerBlock);
 }
 
@@ -149,13 +152,14 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     // interleaved by keeping the same state.;
     
     // TODO(Hamish-Delap): Add switch to decide effect to apply
-    for (auto channel = 0; channel < buffer.getNumChannels(); ++channel)
+    for (auto sample = 0; sample < bufferNumSamples; ++sample)
     {
-        auto* channelData = buffer.getWritePointer(channel, 0);
-        
-        for (auto sample = 0; sample < bufferNumSamples; ++sample)
+        double signal = oscillator.oscCycleWithFreq(500, 1);
+        for (auto channel = 0; channel < buffer.getNumChannels(); ++channel)
         {
-            channelData[sample] = lldsp::tanhDistortion(channelData[sample], 100);
+            auto* channelData = buffer.getWritePointer(channel, 0);
+            channelData[sample] = signal;
+            //channelData[sample] = lldsp::tanhDistortion(channelData[sample], 10);
             // ..do something to the data...
         }
     }
