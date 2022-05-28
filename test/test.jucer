@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="x5wpwc" name="test" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              cppLanguageStandard="20" headerPath="&quot;C:\Users\hamis\Documents\Dev\AudioDevelopment\GUILang&quot;">
+  <MAINGROUP id="v7EcJp" name="test">
+    <GROUP id="{10E16D76-C2D6-1720-78A3-48AFD6878156}" name="GUILang">
+      <FILE id="od3o9A" name="JUCEConverter.cpp" compile="1" resource="0"
+            file="../../GUILang/JUCEConverter.cpp"/>
+      <FILE id="Sup8pP" name="JUCEConverter.hpp" compile="0" resource="0"
+            file="../../GUILang/JUCEConverter.hpp"/>
+      <FILE id="EFpwgB" name="GUILang.cpp" compile="1" resource="0" file="../../GUILang/GUILang.cpp"/>
+      <FILE id="LC7CKb" name="GUILang.hpp" compile="0" resource="0" file="../../GUILang/GUILang.hpp"/>
+      <FILE id="avocvk" name="parser.cpp" compile="1" resource="0" file="../../GUILang/parser.cpp"/>
+      <FILE id="kh2cRr" name="parser.hpp" compile="0" resource="0" file="../../GUILang/parser.hpp"/>
+      <FILE id="REJmIl" name="structs.h" compile="0" resource="0" file="../../GUILang/structs.h"/>
+    </GROUP>
+    <GROUP id="{8A665A4F-C001-3DCF-0EF5-43CF474329B3}" name="LLDSP">
+      <FILE id="lR409e" name="JStateManager.cpp" compile="1" resource="0"
+            file="../src/JStateManager.cpp"/>
+      <FILE id="Vumm84" name="JStateManager.h" compile="0" resource="0" file="../src/JStateManager.h"/>
+      <FILE id="fBZgOo" name="lldsp.h" compile="0" resource="0" file="../src/lldsp.h"/>
+      <FILE id="sRwnpe" name="SignalGenerator.h" compile="0" resource="0"
+            file="../src/SignalGenerator.h"/>
+    </GROUP>
+    <GROUP id="{D8EDF0B1-7DBD-81D4-1387-E0A87D750BC1}" name="Assets">
+      <FILE id="eQBeNf" name="background.png" compile="0" resource="1" file="assets/background.png"/>
+      <FILE id="Oh1oS1" name="customKnob1Reel.png" compile="0" resource="1"
+            file="assets/customKnob1Reel.png"/>
+    </GROUP>
+    <GROUP id="{53865A20-2DEA-D896-2CA8-CAA845F5997C}" name="Source">
+      <FILE id="J9OkhT" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="zDTQ9Y" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="ZJpHiY" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="iJc9fB" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="test"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="test"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
+    <VS2019 targetFolder="Builds/VisualStudio2019">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="test"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="test"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2019>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <LIVE_SETTINGS>
+    <WINDOWS buildEnabled="1"/>
+  </LIVE_SETTINGS>
+</JUCERPROJECT>

@@ -1,0 +1,10 @@
+
+KNOB m_FirstKnob:
+    size: 500, 20
+    pos: 30, 30
+    range, 0, 10
+
+KNOB m_SecondKnob:
+    size: 500, 50
+    pos: 30, 100
+    range: -10, 10

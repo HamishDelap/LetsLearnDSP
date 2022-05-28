@@ -32,7 +32,16 @@
 *.app
 
 # VSCode
-.code-workspace
+*.code-workspace
+
+# Assets
+*.blend
+*.blend1
+*.pur
+*.kra
+*.kra~
+*.knob
+*.mov
 
 .vscode/
 test/build.bat
@@ -43,3 +52,6 @@ test/build/
 remedy session.rdbg
 project.4coder
 test/check.bat
+test/JuceLibraryCode
+test/Builds
+Assets/
