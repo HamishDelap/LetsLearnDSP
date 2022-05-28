@@ -2,18 +2,18 @@
 
 <JUCERPROJECT id="x5wpwc" name="test" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              cppLanguageStandard="20" headerPath="&quot;C:\Users\hamis\Documents\Dev\AudioDevelopment\GUILang&quot;">
+              cppLanguageStandard="20" headerPath="&quot;C:\Users\hamis\Documents\Dev\AudioDevelopment\UICfg&quot;">
   <MAINGROUP id="v7EcJp" name="test">
-    <GROUP id="{10E16D76-C2D6-1720-78A3-48AFD6878156}" name="GUILang">
-      <FILE id="od3o9A" name="JUCEConverter.cpp" compile="1" resource="0"
-            file="../../GUILang/JUCEConverter.cpp"/>
-      <FILE id="Sup8pP" name="JUCEConverter.hpp" compile="0" resource="0"
-            file="../../GUILang/JUCEConverter.hpp"/>
-      <FILE id="EFpwgB" name="GUILang.cpp" compile="1" resource="0" file="../../GUILang/GUILang.cpp"/>
-      <FILE id="LC7CKb" name="GUILang.hpp" compile="0" resource="0" file="../../GUILang/GUILang.hpp"/>
-      <FILE id="avocvk" name="parser.cpp" compile="1" resource="0" file="../../GUILang/parser.cpp"/>
-      <FILE id="kh2cRr" name="parser.hpp" compile="0" resource="0" file="../../GUILang/parser.hpp"/>
-      <FILE id="REJmIl" name="structs.h" compile="0" resource="0" file="../../GUILang/structs.h"/>
+    <GROUP id="{34057503-0AF1-56FF-9CE6-FB9A0C368AD4}" name="UICfg">
+      <FILE id="KpWHvq" name="GUILang.cpp" compile="1" resource="0" file="../../UICfg/GUILang.cpp"/>
+      <FILE id="j4QO3y" name="GUILang.hpp" compile="0" resource="0" file="../../UICfg/GUILang.hpp"/>
+      <FILE id="goxJki" name="JUCEConverter.cpp" compile="1" resource="0"
+            file="../../UICfg/JUCEConverter.cpp"/>
+      <FILE id="cTdo1A" name="JUCEConverter.hpp" compile="0" resource="0"
+            file="../../UICfg/JUCEConverter.hpp"/>
+      <FILE id="bOw1Rk" name="Parser.cpp" compile="1" resource="0" file="../../UICfg/Parser.cpp"/>
+      <FILE id="EY3qWp" name="Parser.hpp" compile="0" resource="0" file="../../UICfg/Parser.hpp"/>
+      <FILE id="d4LDbR" name="structs.h" compile="0" resource="0" file="../../UICfg/structs.h"/>
     </GROUP>
     <GROUP id="{8A665A4F-C001-3DCF-0EF5-43CF474329B3}" name="LLDSP">
       <FILE id="lR409e" name="JStateManager.cpp" compile="1" resource="0"
