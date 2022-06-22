@@ -130,6 +130,10 @@ void TestAudioProcessorEditor::UpdateFxLabel()
     {
         fxLabel.setText("Distortion", juce::NotificationType::dontSendNotification);
     }
+    else if (audioProcessor.m_Effects[audioProcessor.m_CurrentEffect] == TestAudioProcessor::Effect::Reverb)
+    {
+        fxLabel.setText("Reverb", juce::NotificationType::dontSendNotification);
+    }
 }
 
 void TestAudioProcessorEditor::buttonClicked(Button* button)
@@ -137,13 +141,13 @@ void TestAudioProcessorEditor::buttonClicked(Button* button)
     if (button == &nextFxButton)
     {
         audioProcessor.m_CurrentEffect += 1;
-        if (audioProcessor.m_CurrentEffect > 2) { audioProcessor.m_CurrentEffect = 0; }
+        if (audioProcessor.m_CurrentEffect > 3) { audioProcessor.m_CurrentEffect = 0; }
         UpdateFxLabel();
     }
     else if (button == &prevFxButton)
     {
         audioProcessor.m_CurrentEffect -= 1;
-        if (audioProcessor.m_CurrentEffect < 0) { audioProcessor.m_CurrentEffect = 2; }
+        if (audioProcessor.m_CurrentEffect < 0) { audioProcessor.m_CurrentEffect = 3; }
         UpdateFxLabel();
     }
 }

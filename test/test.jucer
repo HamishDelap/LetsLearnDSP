@@ -16,6 +16,8 @@
       <FILE id="d4LDbR" name="structs.h" compile="0" resource="0" file="../../UICfg/structs.h"/>
     </GROUP>
     <GROUP id="{8A665A4F-C001-3DCF-0EF5-43CF474329B3}" name="LLDSP">
+      <FILE id="gUpepA" name="lldsp.dsp.cpp" compile="1" resource="0" file="../src/lldsp.dsp.cpp"/>
+      <FILE id="cHCnZ8" name="lldsp.dsp.h" compile="0" resource="0" file="../src/lldsp.dsp.h"/>
       <FILE id="CViNeJ" name="lldsp.effects.cpp" compile="1" resource="0"
             file="../src/lldsp.effects.cpp"/>
       <FILE id="ObLYjg" name="lldsp.utils.cpp" compile="1" resource="0" file="../src/lldsp.utils.cpp"/>

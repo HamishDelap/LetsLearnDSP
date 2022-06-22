@@ -63,14 +63,16 @@ public:
     enum class Effect {
         Delay,
         Distortion,
-        Chorus
+        Chorus,
+        Reverb
     };
-    Effect m_Effects[3] = { Effect::Delay, Effect::Distortion, Effect::Chorus };
+    Effect m_Effects[4] = { Effect::Delay, Effect::Distortion, Effect::Chorus, Effect::Reverb };
     int m_CurrentEffect = 0;
 
 private:
     lldsp::effects::Chorus chorus;
     lldsp::utils::RingBuffer delay;
+    lldsp::effects::Reverb reverb;
 
     double m_Samplerate = 44100;
     //==============================================================================

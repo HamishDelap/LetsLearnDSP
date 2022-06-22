@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include <cmath>
 
 //==============================================================================
 TestAudioProcessor::TestAudioProcessor()
@@ -98,6 +99,25 @@ void TestAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
     m_Samplerate = sampleRate;
     chorus = lldsp::effects::Chorus(sampleRate);
     chorus.SetFrequency(0.25);
+
+    double reverbTime = 0.1;
+    // This needs to be turned into member function of reverb
+    lldsp::effects::Reverb::Params reverbParams;
+    reverbParams.t1 = 0.03;
+    reverbParams.t2 = 0.035;
+    reverbParams.t3 = 0.04;
+    reverbParams.t4 = 0.045;
+    reverbParams.t5 = 0.005;
+    reverbParams.t6 = 0.0017;
+    reverbParams.g1 = -0.9332543;
+    reverbParams.g2 = -0.9225714;
+    reverbParams.g3 = -0.9120108;
+    reverbParams.g4 = -0.9015711;
+    reverbParams.g5 = 0.7;
+    reverbParams.g6 = 0.7;
+    reverbParams.g7 = 0.9;
+
+    reverb = lldsp::effects::Reverb(reverbParams, sampleRate);
 
     delay = lldsp::utils::RingBuffer(sampleRate);
 }
@@ -193,7 +213,12 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
             delay.Push(channelData[sample] * 0.75);
             leftChannelData[sample] = channelData[sample];
         }
-
+        else if (m_Effects[m_CurrentEffect] == Effect::Reverb)
+        {
+            float drywet = static_cast<float>(stateManager.apvt.getRawParameterValue("FREQ")->load());
+            channelData[sample] =reverb.Process(channelData[sample]);
+            leftChannelData[sample] = channelData[sample];
+        }
     }
 }
 
