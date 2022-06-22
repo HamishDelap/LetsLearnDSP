@@ -25,7 +25,7 @@ public:
         const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider) override;
 };
 
-class TestAudioProcessorEditor : public AudioProcessorEditor, public Slider::Listener
+class TestAudioProcessorEditor : public AudioProcessorEditor, public Slider::Listener, public Button::Listener
 {
 public:
     TestAudioProcessorEditor (TestAudioProcessor&);
@@ -38,7 +38,11 @@ public:
     //==============================================================================
     void sliderValueChanged(Slider* slider) override;
 
+    void buttonClicked(juce::Button* button) override;
+
 private:
+    void UpdateFxLabel();
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     TestAudioProcessor& audioProcessor;
@@ -49,7 +53,12 @@ private:
     Slider feedbackSlider;
     ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> feedbackSliderAttachment;
 
+    ArrowButton nextFxButton;
+    ArrowButton prevFxButton;
+
     SmallKnob knobLookAndFeel;
+
+    Label fxLabel;
 
     GUILang m_guiLang;
 

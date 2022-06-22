@@ -8,68 +8,8 @@
 
 namespace lldsp
 {
-
-
-    struct RingBuffer;
-    struct Chorus;
     class SignalGenerator;
-    /**
-     * @brief Applies tanh waveshaping to a signal on a per sample basis.
-     * 
-     * @param sample 
-     * @param gain 
-     * @return float 
-     */
-    static double TanhDistortion(float sample, float gain) 
-    {
-        return std::tanh(sample * gain) / gain;
-    }
 }
-
-struct lldsp::RingBuffer
-{
-    int N;
-    double* buffer;
-    int start = 0;
-    int end = 0;
-    bool full = false;
-    int length = 0;
-
-    RingBuffer(int size) : N(size)
-    {
-        buffer = new double[size];
-    }
-
-    void Push(double item)
-    {
-        buffer[end++] = item;
-        if (end == N) { full = true; }
-        if (!full) { length++; }
-        end %= N;
-    }
-
-    double Pop()
-    {
-        if (full)
-        {
-            double item = buffer[start++];
-            start %= N;
-            return item;
-        }
-        return 0;
-    }
-
-    double Get(int delaySamples)
-    {
-        if (full)
-        {
-            int delayIndex = end - delaySamples;
-            if (delayIndex < 0) { delayIndex = N + delayIndex; }
-            return buffer[delayIndex];
-        }
-        return 0;
-    }
-};
 
 class lldsp::SignalGenerator
 {
@@ -168,51 +108,6 @@ private:
     double triangleDelta = 0.1;
 };
 
-static double mapRange(double input, double inStart, double inEnd, double outStart, double outEnd)
-{
-    double slope = (outEnd - outStart) / (inEnd - inStart);
-    return outStart + slope * (input - inStart);
-}
 
-struct lldsp::Chorus
-{
-    lldsp::RingBuffer delay = lldsp::RingBuffer(48000);
-    lldsp::SignalGenerator oscillator;
-    double frequency = 100;
-
-    Chorus()
-    {
-    }
-
-    Chorus(double sampleRate)
-    {
-        delay = lldsp::RingBuffer(sampleRate);
-        oscillator.SetSampleRate(sampleRate);
-    }
-
-    // Ring Buffer Wrappers
-    void Push(double item) { delay.Push(item); }
-    double Pop() { return delay.Pop(); }
-
-    double Get()
-    {
-        double index = oscillator.OscCycleWithFreq(frequency, 1);
-        index += 1;
-        index = mapRange(index, 0, 2, 408, 616);
-
-        return delay.Get(index);
-    }
-
-    void SetFrequency(double freq)
-    {
-        frequency = freq;
-    }
-
-    void SetWaveform(lldsp::SignalGenerator::Waveforms waveform)
-    {
-        oscillator.SetWaveform(waveform);
-    }
-
-};
 
 #endif

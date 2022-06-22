@@ -10,6 +10,8 @@
 
 #include <JuceHeader.h>
 #include "..\..\src\lldsp.h"
+#include "..\..\src\lldsp.utils.h"
+#include "..\..\src\lldsp.effects.h"
 #include "..\..\src\JStateManager.h"
 #include "..\..\src\SignalGenerator.h"
 
@@ -58,8 +60,19 @@ public:
 
     JStateManager stateManager;
 
+    enum class Effect {
+        Delay,
+        Distortion,
+        Chorus
+    };
+    Effect m_Effects[3] = { Effect::Delay, Effect::Distortion, Effect::Chorus };
+    int m_CurrentEffect = 0;
+
 private:
-    lldsp::Chorus chorus;
+    lldsp::effects::Chorus chorus;
+    lldsp::utils::RingBuffer delay;
+
+    double m_Samplerate = 44100;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestAudioProcessor)
 };

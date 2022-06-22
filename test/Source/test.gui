@@ -8,3 +8,7 @@ KNOB m_SecondKnob:
     size: 500, 50
     pos: 30, 100
     range: -10, 10
+
+ARROWBUTTON NEXTFX:
+    size: 40, 40
+    pos: 120, 150

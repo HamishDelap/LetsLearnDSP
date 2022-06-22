@@ -19,7 +19,7 @@ TestAudioProcessor::TestAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), stateManager(*this), chorus()
+                       ), stateManager(*this), chorus(), delay(44100)
 #endif
 {
 }
@@ -95,8 +95,11 @@ void TestAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    chorus = lldsp::Chorus(sampleRate);
+    m_Samplerate = sampleRate;
+    chorus = lldsp::effects::Chorus(sampleRate);
     chorus.SetFrequency(0.25);
+
+    delay = lldsp::utils::RingBuffer(sampleRate);
 }
 
 void TestAudioProcessor::releaseResources()
@@ -154,23 +157,44 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
 
-    //for (auto channel = 0; channel < buffer.getNumChannels(); channel++)
-    //{
-        for (auto sample = 0; sample < bufferNumSamples; ++sample)
-        {
-            auto* channelData = buffer.getWritePointer(1, 0);
-            auto* leftChannelData = buffer.getWritePointer(0, 0);
+    for (auto sample = 0; sample < bufferNumSamples; ++sample)
+    {
+        auto* channelData = buffer.getWritePointer(1, 0);
+        auto* leftChannelData = buffer.getWritePointer(0, 0);
 
-            //int delayTime = static_cast<int>(stateManager.apvt.getRawParameterValue("TIME")->load());
-            //float delayFeedback = static_cast<float>(stateManager.apvt.getRawParameterValue("FEEDBACK")->load());
+        if (m_Effects[m_CurrentEffect] == Effect::Chorus)
+        {
+            float freq = static_cast<float>(stateManager.apvt.getRawParameterValue("FREQ")->load());
+
+            chorus.SetFrequency(freq);
 
             double delayVal = chorus.Get();
-            channelData[sample] = delayVal + channelData[sample], 10;
+            channelData[sample] = delayVal + channelData[sample];
 
             chorus.Push(channelData[sample] * 0.75);
             leftChannelData[sample] = channelData[sample];
         }
-    //}
+        else if (m_Effects[m_CurrentEffect] == Effect::Distortion)
+        {
+            float gain = static_cast<float>(stateManager.apvt.getRawParameterValue("FREQ")->load());
+
+            channelData[sample] = lldsp::effects::TanhDistortion(channelData[sample], gain);
+            leftChannelData[sample] = channelData[sample];
+        }
+        else if (m_Effects[m_CurrentEffect] == Effect::Delay)
+        {
+            float delayTime = static_cast<float>(stateManager.apvt.getRawParameterValue("FREQ")->load());
+
+            delayTime = m_Samplerate * (delayTime / 10);
+
+            double delayVal = delay.Get(delayTime);
+            channelData[sample] = delayVal + channelData[sample];
+
+            delay.Push(channelData[sample] * 0.75);
+            leftChannelData[sample] = channelData[sample];
+        }
+
+    }
 }
 
 //==============================================================================
