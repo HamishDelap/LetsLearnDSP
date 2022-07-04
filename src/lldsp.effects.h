@@ -58,11 +58,29 @@ namespace lldsp::effects
         };
 
         Reverb() {};
-        Reverb(Params parameters, double sampleRate);
+        Reverb(double sampleRate);
 
-        double Process(double sample);
+        double Process(double sample, double time, double amount);
     private:
-        Params m_Parameters = {};
+        void UpdateParameters(double time, double amount);
+
+        Params m_Parameters = {
+            // Time
+            0.03,
+            0.035,
+            0.04,
+            0.045,
+            0.005,
+            0.0017,
+            // Gain
+            -0.9332543,
+            -0.9225714,
+            -0.9120108,
+            -0.9015711,
+            0.7,
+            0.7,
+            0.5
+        };
 
         lldsp::dsp::CombFilter m_CombOne;
         lldsp::dsp::CombFilter m_CombTwo;

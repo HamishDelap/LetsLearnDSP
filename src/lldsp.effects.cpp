@@ -46,22 +46,33 @@ void lldsp::effects::Chorus::SetWaveform(lldsp::SignalGenerator::Waveforms wavef
 
 
 // Reverb
-lldsp::effects::Reverb::Reverb(lldsp::effects::Reverb::Params parameters, double sampleRate)
+lldsp::effects::Reverb::Reverb(double sampleRate)
 {
-    m_CombOne = lldsp::dsp::CombFilter(parameters.t1, parameters.g1, sampleRate);
-    m_CombTwo = lldsp::dsp::CombFilter(parameters.t2, parameters.g2, sampleRate);
-    m_CombThree = lldsp::dsp::CombFilter(parameters.t3, parameters.g3, sampleRate);
-    m_CombFour = lldsp::dsp::CombFilter(parameters.t4, parameters.g4, sampleRate);
+    m_CombOne = lldsp::dsp::CombFilter(m_Parameters.t1, m_Parameters.g1, sampleRate);
+    m_CombTwo = lldsp::dsp::CombFilter(m_Parameters.t2, m_Parameters.g2, sampleRate);
+    m_CombThree = lldsp::dsp::CombFilter(m_Parameters.t3, m_Parameters.g3, sampleRate);
+    m_CombFour = lldsp::dsp::CombFilter(m_Parameters.t4, m_Parameters.g4, sampleRate);
 
-    m_AllPassOne = lldsp::dsp::AllPassFilter(parameters.t5, parameters.g5, sampleRate);
-    m_AllPassTwo = lldsp::dsp::AllPassFilter(parameters.t6, parameters.g6, sampleRate);
+    m_AllPassOne = lldsp::dsp::AllPassFilter(m_Parameters.t5, m_Parameters.g5, sampleRate);
+    m_AllPassTwo = lldsp::dsp::AllPassFilter(m_Parameters.t6, m_Parameters.g6, sampleRate);
 }
 
-double lldsp::effects::Reverb::Process(double sample)
+double lldsp::effects::Reverb::Process(double sample, double time, double amount)
 {
+    UpdateParameters(time, amount);
     double combFiltersSummed = m_CombOne.Process(sample) + m_CombTwo.Process(sample) + m_CombThree.Process(sample) + m_CombFour.Process(sample);
     double firstAllPassResult = m_AllPassOne.Process(combFiltersSummed);
     double secondAllPassResult = m_AllPassTwo.Process(firstAllPassResult);
 
     return sample + secondAllPassResult * m_Parameters.g7;
+}
+
+void lldsp::effects::Reverb::UpdateParameters(double time, double amount)
+{
+    m_Parameters.g7 = amount;
+
+    m_Parameters.g1 = std::pow(10, (-1 * (3 * m_Parameters.t1) / time));
+    m_Parameters.g2 = std::pow(10, (-1 * (3 * m_Parameters.t2) / time));
+    m_Parameters.g3 = std::pow(10, (-1 * (3 * m_Parameters.t3) / time));
+    m_Parameters.g4 = std::pow(10, (-1 * (3 * m_Parameters.t4) / time));
 }
