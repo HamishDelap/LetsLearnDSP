@@ -170,7 +170,7 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
 
         if (m_Effects[m_CurrentEffect] == Effect::Chorus)
         {
-            float freq = static_cast<float>(stateManager.apvt.getRawParameterValue("FREQ")->load());
+            float freq = static_cast<float>(stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
 
             chorus.SetFrequency(freq);
 
@@ -182,14 +182,14 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
         }
         else if (m_Effects[m_CurrentEffect] == Effect::Distortion)
         {
-            float gain = static_cast<float>(stateManager.apvt.getRawParameterValue("FREQ")->load());
+            float gain = static_cast<float>(stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
 
             channelData[sample] = lldsp::effects::TanhDistortion(channelData[sample], gain);
             leftChannelData[sample] = channelData[sample];
         }
         else if (m_Effects[m_CurrentEffect] == Effect::Delay)
         {
-            float delayTime = static_cast<float>(stateManager.apvt.getRawParameterValue("FREQ")->load());
+            float delayTime = static_cast<float>(stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
 
             delayTime = m_Samplerate * (delayTime / 10);
 
@@ -201,8 +201,9 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
         }
         else if (m_Effects[m_CurrentEffect] == Effect::Reverb)
         {
-            float drywet = static_cast<float>(stateManager.apvt.getRawParameterValue("FREQ")->load());
-            channelData[sample] =reverb.Process(channelData[sample], 2, drywet / 10);
+            float drywet = static_cast<float>(stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
+            float time = static_cast<float>(stateManager.apvt.getRawParameterValue("CENTERKNOB")->load());
+            channelData[sample] =reverb.Process(channelData[sample], time, drywet / 10);
             leftChannelData[sample] = channelData[sample];
         }
     }

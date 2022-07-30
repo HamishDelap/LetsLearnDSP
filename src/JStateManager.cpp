@@ -63,8 +63,10 @@ StringArray JStateManager::getPresets()
 AudioProcessorValueTreeState::ParameterLayout JStateManager::getParameterLayout()
 {
         AudioProcessorValueTreeState::ParameterLayout params;
-        params.add(std::make_unique<AudioParameterFloat>("FREQ", "FREQ", 0, 10, 1));
-        //params.add(std::make_unique<AudioParameterFloat>("FEEDBACK", "FEEDBACK", NormalisableRange<float>(0, 1), 0.5f));
+        params.add(std::make_unique<AudioParameterFloat>("BIGKNOB", "BIGKNOB", 0, 10, 1));
+        params.add(std::make_unique<AudioParameterFloat>("LEFTKNOB", "LEFTKNOB", 0, 10, 1));
+        params.add(std::make_unique<AudioParameterFloat>("CENTERKNOB", "CENTERKNOB", 0, 10, 1));
+        params.add(std::make_unique<AudioParameterFloat>("RIGHTKNOB", "RIGHTKNOB", 0, 10, 1));
 
         return params;
 }

@@ -1,12 +1,6 @@
 #include "lldsp.effects.h"
 #include "lldsp.utils.h"
 
-static double mapRange(double input, double inStart, double inEnd, double outStart, double outEnd)
-{
-    double slope = (outEnd - outStart) / (inEnd - inStart);
-    return outStart + slope * (input - inStart);
-}
-
 // Chorus
 lldsp::effects::Chorus::Chorus(double sampleRate)
 {
@@ -29,7 +23,7 @@ double lldsp::effects::Chorus::Get()
 {
     double index = oscillator.OscCycleWithFreq(frequency, 1);
     index += 1;
-    index = mapRange(index, 0, 2, 408, 616);
+    index = lldsp::utils::mapRange(index, 0, 2, 408, 616);
 
     return delay.Get(index);
 }

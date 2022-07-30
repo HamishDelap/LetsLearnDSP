@@ -31,6 +31,9 @@
             file="../src/SignalGenerator.h"/>
     </GROUP>
     <GROUP id="{D8EDF0B1-7DBD-81D4-1387-E0A87D750BC1}" name="Assets">
+      <FILE id="sKSqkt" name="background2.png" compile="0" resource="1" file="../Assets/background2.png"/>
+      <FILE id="STJni0" name="smallKnobReel.png" compile="0" resource="1"
+            file="../Assets/smallKnobReel.png"/>
       <FILE id="eQBeNf" name="background.png" compile="0" resource="1" file="assets/background.png"/>
       <FILE id="Oh1oS1" name="customKnob1Reel.png" compile="0" resource="1"
             file="assets/customKnob1Reel.png"/>

@@ -4,6 +4,12 @@
 // Utils
 namespace lldsp::utils
 {
+    static double mapRange(double input, double inStart, double inEnd, double outStart, double outEnd)
+    {
+        double slope = (outEnd - outStart) / (inEnd - inStart);
+        return outStart + slope * (input - inStart);
+    }
+
     class RingBuffer
     {
     public:

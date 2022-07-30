@@ -17,6 +17,14 @@
 */
 using namespace juce;
 
+class BigKnob : public LookAndFeel_V3
+{
+public:
+    BigKnob() {}
+    void drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
+        const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider) override;
+};
+
 class SmallKnob : public LookAndFeel_V3
 {
 public:
@@ -24,6 +32,7 @@ public:
     void drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
         const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider) override;
 };
+
 
 class TestAudioProcessorEditor : public AudioProcessorEditor, public Slider::Listener, public Button::Listener
 {
@@ -47,16 +56,23 @@ private:
     // access the processor object that created it.
     TestAudioProcessor& audioProcessor;
 
-    Slider timeSlider;
-    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> timeSliderAttachment;
+    Slider bigKnob;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> bigKnobAttachment;
 
-    Slider feedbackSlider;
-    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> feedbackSliderAttachment;
+    Slider leftKnob;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> leftKnobAttachment;
+
+    Slider centerKnob;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> centerKnobAttachment;
+    
+    Slider rightKnob;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> rightKnobAttachment;
 
     ArrowButton nextFxButton;
     ArrowButton prevFxButton;
 
-    SmallKnob knobLookAndFeel;
+    SmallKnob smallKnobLookAndFeel;
+    BigKnob bigKnobLookAndFeel;
 
     Label fxLabel;
 
