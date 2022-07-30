@@ -14,6 +14,7 @@
 #include "..\..\src\lldsp.effects.h"
 #include "..\..\src\JStateManager.h"
 #include "..\..\src\SignalGenerator.h"
+#include "..\..\src\DbgEngine\DebugProcessor.h"
 
 //==============================================================================
 /**
@@ -68,6 +69,8 @@ public:
     };
     Effect m_Effects[4] = { Effect::Delay, Effect::Distortion, Effect::Chorus, Effect::Reverb };
     int m_CurrentEffect = 0;
+
+    DebugProcessor m_DebugProcessor;
 
 private:
     lldsp::effects::Chorus chorus;

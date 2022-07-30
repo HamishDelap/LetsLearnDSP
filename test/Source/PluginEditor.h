@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include <GUILang.hpp>
+#include "..\..\src\DbgEngine\DebugEditor.h"
 
 //==============================================================================
 /**
@@ -71,12 +72,17 @@ private:
     ArrowButton nextFxButton;
     ArrowButton prevFxButton;
 
+    ToggleButton dbgBtn;
+
     SmallKnob smallKnobLookAndFeel;
     BigKnob bigKnobLookAndFeel;
 
     Label fxLabel;
 
     GUILang m_guiLang;
+
+    ScopedPointer<ResizableWindow> m_DebugWindow;
+    juce::Component m_DebugEditor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestAudioProcessorEditor)
 };

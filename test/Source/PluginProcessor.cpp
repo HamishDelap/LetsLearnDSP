@@ -23,6 +23,7 @@ TestAudioProcessor::TestAudioProcessor()
                        ), stateManager(*this), chorus(), delay(44100)
 #endif
 {
+    m_DebugProcessor;
 }
 
 TestAudioProcessor::~TestAudioProcessor()
@@ -206,6 +207,8 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
             channelData[sample] =reverb.Process(channelData[sample], time, drywet / 10);
             leftChannelData[sample] = channelData[sample];
         }
+
+        m_DebugProcessor.PushNextSampleIntoFifo(channelData[sample]);
     }
 }
 

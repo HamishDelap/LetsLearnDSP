@@ -18,6 +18,7 @@ namespace lldsp::utils
         double Pop();
         double Get(int delaySamples);
         double Get(double delayTime, double samplerate);
+        double* GetBuffer();
 
     private:
         int N;

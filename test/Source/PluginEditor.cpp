@@ -108,12 +108,20 @@ TestAudioProcessorEditor::TestAudioProcessorEditor (TestAudioProcessor& p)
     rightKnob.setTextBoxStyle(noDisplay, false, 1, 1);
     rightKnobAttachment = new AudioProcessorValueTreeState::SliderAttachment(audioProcessor.stateManager.apvt, "RIGHTKNOB", rightKnob);
 
-
-
     bigKnob.setLookAndFeel(&bigKnobLookAndFeel);
     leftKnob.setLookAndFeel(&smallKnobLookAndFeel);
     centerKnob.setLookAndFeel(&smallKnobLookAndFeel);
     rightKnob.setLookAndFeel(&smallKnobLookAndFeel);
+
+    m_DebugWindow = new ResizableWindow("New Window", true);
+    m_DebugWindow->setUsingNativeTitleBar(true);
+    m_DebugWindow->setCentrePosition(400, 400);
+    m_DebugWindow->setVisible(false);
+    m_DebugWindow->setResizable(false, false);
+    m_DebugWindow->setContentOwned(new DebugEditor(audioProcessor), true); // maybe rename that to NewGUI or similar
+
+    addAndMakeVisible(dbgBtn);
+    dbgBtn.onClick = [this] {dbgBtn.getToggleState() ? m_DebugWindow->setVisible(true) : m_DebugWindow->setVisible(false); };
 }
 
 TestAudioProcessorEditor::~TestAudioProcessorEditor()
@@ -146,6 +154,8 @@ void TestAudioProcessorEditor::resized()
     leftKnob.setBounds(115, 735, 120, 120);
     centerKnob.setBounds(314, 735, 120, 120);
     rightKnob.setBounds(532, 735, 120, 120);
+
+    dbgBtn.setBounds(10, 10, 20, 20);
 }
 
 void TestAudioProcessorEditor::sliderValueChanged(Slider* slider) 

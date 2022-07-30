@@ -4,6 +4,14 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               cppLanguageStandard="17" headerPath="&quot;C:\Users\hamis\Documents\Dev\AudioDevelopment\UICfg&quot;">
   <MAINGROUP id="v7EcJp" name="test">
+    <GROUP id="{095CFAB0-A759-3275-4185-06D2E40794A9}" name="DbgEngine">
+      <FILE id="LLvnvg" name="DebugEditor.cpp" compile="1" resource="0" file="../src/DbgEngine/DebugEditor.cpp"/>
+      <FILE id="wi86Sf" name="DebugEditor.h" compile="0" resource="0" file="../src/DbgEngine/DebugEditor.h"/>
+      <FILE id="Ej9juJ" name="DebugProcessor.cpp" compile="1" resource="0"
+            file="../src/DbgEngine/DebugProcessor.cpp"/>
+      <FILE id="ljiu7B" name="DebugProcessor.h" compile="0" resource="0"
+            file="../src/DbgEngine/DebugProcessor.h"/>
+    </GROUP>
     <GROUP id="{34057503-0AF1-56FF-9CE6-FB9A0C368AD4}" name="UICfg">
       <FILE id="KpWHvq" name="GUILang.cpp" compile="1" resource="0" file="../../UICfg/GUILang.cpp"/>
       <FILE id="j4QO3y" name="GUILang.hpp" compile="0" resource="0" file="../../UICfg/GUILang.hpp"/>
@@ -70,6 +78,7 @@
         <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
@@ -90,6 +99,7 @@
         <MODULEPATH id="juce_graphics" path="C:\Users\hamis\Documents\Dev\JUCE\modules"/>
         <MODULEPATH id="juce_gui_basics" path="C:\Users\hamis\Documents\Dev\JUCE\modules"/>
         <MODULEPATH id="juce_gui_extra" path="C:\Users\hamis\Documents\Dev\JUCE\modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
@@ -103,6 +113,7 @@
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

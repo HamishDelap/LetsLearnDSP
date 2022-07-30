@@ -42,3 +42,8 @@ double lldsp::utils::RingBuffer::Get(double delayTime, double samplerate)
     int delaySamples = samplerate / delayTime;
     return Get(delaySamples);
 }
+
+double* lldsp::utils::RingBuffer::GetBuffer()
+{
+    return buffer;
+}
