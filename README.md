@@ -47,10 +47,15 @@
 
 A simple DSP library written in C++ with the aim of learning everything audio development related.
 
+### Overview
+The project currently consists of three parts:
+1. The LLDSP library found in the src/ directory.
+2. The "1Knob" plugin in the test/ directory. This will evolve overtime and server as a one stop shop to demonstrate all things lldsp.
+3. The DbgEngine can be found in src/DbgEngine/ directory. This is a JUCE component which will display a variety of information and graphs for debugging the application.
+
 ### Built With
 
-Nothing... **Yet!**
-
+C++ and JUCE...
 
 
 <!-- GETTING STARTED -->
@@ -66,7 +71,7 @@ Not a clue yet
 
 1. Clone the repo
 2. Include the header
-3. Hope it works
+3. Pray that it works 🙏
 
 
 <!-- ROADMAP -->
