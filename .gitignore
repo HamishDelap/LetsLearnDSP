@@ -53,5 +53,5 @@ remedy session.rdbg
 project.4coder
 test/check.bat
 test/JuceLibraryCode
-test/Builds
+test/Builds/VisualStudio2019
 Assets/
