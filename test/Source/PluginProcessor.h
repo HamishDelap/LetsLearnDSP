@@ -59,6 +59,10 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    void reset();
+    void mute();
+    void unmute();
+
     JStateManager stateManager;
 
     enum class Effect {
@@ -73,6 +77,9 @@ public:
     DebugProcessor m_DebugProcessor;
 
 private:
+    bool resetFlag = false;
+    bool muteFlag = false;
+
     lldsp::effects::Chorus chorus;
     lldsp::utils::RingBuffer delay;
     lldsp::effects::Reverb reverb;

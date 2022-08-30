@@ -140,6 +140,21 @@ bool TestAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) con
   #endif
 }
 #endif
+    
+void TestAudioProcessor::reset()
+{
+    resetFlag = true;
+}
+
+void TestAudioProcessor::mute()
+{
+    muteFlag = true;
+}
+
+void TestAudioProcessor::unmute()
+{
+    muteFlag = false;
+}
 
 void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
@@ -208,7 +223,22 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
             leftChannelData[sample] = channelData[sample];
         }
 
+        if (resetFlag || muteFlag)
+        {
+            channelData[sample] = 0;
+            leftChannelData[sample] = 0;
+        }
+
         m_DebugProcessor.PushNextSampleIntoFifo(channelData[sample]);
+    }
+    
+    if (resetFlag)
+    {
+        // Reset Effects
+        chorus = lldsp::effects::Chorus(m_Samplerate);
+        reverb = lldsp::effects::Reverb(m_Samplerate);
+        delay = lldsp::utils::RingBuffer(m_Samplerate);
+        resetFlag = false;
     }
 }
 

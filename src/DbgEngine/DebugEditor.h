@@ -7,10 +7,21 @@ class DebugEditor : public juce::Component, public Timer
 public:
     DebugEditor(TestAudioProcessor& audioProcessor);
     void paint(juce::Graphics& g) override;
+    void resized() override;
     void timerCallback() override;
+
+    void PaintWaveform(juce::Graphics& g, const int index);
+    void PaintSpectrum(juce::Graphics& g, const int index);
+
 private:
-    int specHeight;
-    int specWidth;
+    ToggleButton pauseBtn;
+    ToggleButton muteBtn;
+    ArrowButton resetBtn;
+
+    Label pauseBtnLabel;
+    Label muteBtnLabel;
+    Label resetBtnLabel;
+
     AffineTransform transform;
     TestAudioProcessor *m_AudioProcessor;
 };

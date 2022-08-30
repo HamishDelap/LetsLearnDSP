@@ -6,6 +6,16 @@ DebugProcessor::DebugProcessor() :fft(fftOrder), windowFunction(fftSize, juce::d
     fifoIndex = 0;
 }
 
+void DebugProcessor::Pause()
+{
+    paused = true;
+}
+
+void DebugProcessor::Resume()
+{
+    paused = false;
+}
+
 void DebugProcessor::PushNextSampleIntoFifo(float sample)
 {
     if (fifoIndex == fftSize)
@@ -14,6 +24,8 @@ void DebugProcessor::PushNextSampleIntoFifo(float sample)
         {
             juce::zeromem(fftData, sizeof(fftData));
             memcpy(fftData, fifo, sizeof(fifo));
+            juce::zeromem(waveformData, sizeof(waveformData));
+            memcpy(waveformData, fifo, sizeof(fifo));
             nextFFTBlockReady = true;
         }
 
@@ -21,6 +33,15 @@ void DebugProcessor::PushNextSampleIntoFifo(float sample)
     }
 
     fifo[fifoIndex++] = sample;
+}
+
+void DebugProcessor::CalcNextDebugFrame()
+{
+    if (!paused)
+    {
+        CalcNextFrameOfSpectrum();
+        CalcNextFrameOfWaveform();
+    }
 }
 
 void DebugProcessor::CalcNextFrameOfSpectrum()
@@ -40,6 +61,15 @@ void DebugProcessor::CalcNextFrameOfSpectrum()
         auto fftDataIndex = juce::jlimit(0, fftSize / 2, (int)(skewedXAxis * (float)fftSize * 0.5f));
         auto currentLevel = juce::jmap(juce::jlimit(minLevel, maxLevel, juce::Decibels::gainToDecibels(fftData[fftDataIndex]) -
             juce::Decibels::gainToDecibels((float)fftSize)), minLevel, maxLevel, 0.0f, 1.0f);
-        scopeData[i] = currentLevel;
+        spectrumScopeData[i] = currentLevel;
     }
 }
+
+void DebugProcessor::CalcNextFrameOfWaveform()
+{
+    for (int i = 0; i < scopeSize; i++)
+    {
+        waveformScopeData[i] = waveformData[i];
+    }
+}
+

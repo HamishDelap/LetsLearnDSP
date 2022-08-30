@@ -8,7 +8,11 @@ class DebugProcessor
 public:
 	DebugProcessor();
     void PushNextSampleIntoFifo(float sample);
-    void CalcNextFrameOfSpectrum();
+
+    void CalcNextDebugFrame();
+
+    void Pause();
+    void Resume();
 
     enum
     {
@@ -17,15 +21,22 @@ public:
         scopeSize = 512
     };
 
-    float scopeData[scopeSize] = {};
+    float spectrumScopeData[scopeSize] = {};
+    float waveformScopeData[scopeSize] = {};
+
     bool nextFFTBlockReady = false;
 
 private:
-
+    void CalcNextFrameOfSpectrum();
+    void CalcNextFrameOfWaveform();
+    
+    bool paused = false;
+    
     juce::dsp::FFT fft;
     juce::dsp::WindowingFunction<float> windowFunction;
 
     float fifo[fftSize] = {};
     float fftData[2 * fftSize] = {};
+    float waveformData[2 * fftSize] = {};
     int fifoIndex = 0;
 };
