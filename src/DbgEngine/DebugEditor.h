@@ -1,6 +1,6 @@
 #pragma once
 #include <JuceHeader.h>
-#include "../Source/PluginProcessor.h"
+#include "../PluginProcessor.h"
 
 class DebugEditor : public juce::Component, public Timer
 {

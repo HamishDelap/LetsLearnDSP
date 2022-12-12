@@ -47,13 +47,12 @@ public:
 
     double OscCycleWithFreq(double frequency, double level) 
     {
-
         FreqToAngle(frequency);
         sineValue = sin(currentAngle);
         switch (waveform) 
         {
         case Waveforms::Sin:
-            value = level * sineValue;
+            value = sineValue;
             break;
         case Waveforms::Triangle:
             value += (sineValue >= 0) ? triangleDelta : -triangleDelta;
@@ -63,7 +62,7 @@ public:
             break;
         }
 
-        return value;
+        return level * value;
     }
 
     double OscCycleWithAngle(double angle, double level) 
