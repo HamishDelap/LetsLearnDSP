@@ -1,4 +1,5 @@
 #include "lldsp.utils.h"
+#include <math.h>
 
 lldsp::utils::RingBuffer::RingBuffer(int size) : N(size)
 {
@@ -46,4 +47,19 @@ double lldsp::utils::RingBuffer::Get(double delayTime, double samplerate)
 double* lldsp::utils::RingBuffer::GetBuffer()
 {
     return buffer;
+}
+
+double lldsp::utils::RingBuffer::GetRMS()
+{
+    double squareTotal = 0;
+    for (int i = 0; i <= N; i++)
+    {
+        squareTotal += buffer[i] * buffer[i];
+    }
+
+    if (!full)
+    {
+        return -1;
+    }
+    return std::pow(squareTotal / N, 0.5);
 }

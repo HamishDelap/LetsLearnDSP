@@ -1,6 +1,6 @@
 #pragma once
 #include <JuceHeader.h>
-#include "../PluginProcessor.h"
+#include "../../Test/Source/PluginProcessor.h"
 
 class DebugEditor : public juce::Component, public Timer
 {
@@ -23,5 +23,5 @@ private:
     Label resetBtnLabel;
 
     AffineTransform transform;
-    TestAudioProcessor *m_AudioProcessor;
+    TestAudioProcessor *m_audioProcessor;
 };

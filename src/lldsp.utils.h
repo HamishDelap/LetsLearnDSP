@@ -20,6 +20,8 @@ namespace lldsp::utils
         double Get(double delayTime, double samplerate);
         double* GetBuffer();
 
+        double GetRMS();
+
     private:
         int N;
         double* buffer;

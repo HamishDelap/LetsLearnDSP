@@ -23,9 +23,9 @@ namespace lldsp::effects
         void SetWaveform(lldsp::SignalGenerator::Waveforms waveform);
 
     private:
-        lldsp::utils::RingBuffer delay = lldsp::utils::RingBuffer(48000);
-        lldsp::SignalGenerator oscillator;
-        double frequency = 100;
+        lldsp::utils::RingBuffer m_delay = lldsp::utils::RingBuffer(48000);
+        lldsp::SignalGenerator m_oscillator;
+        double m_frequency = 100;
     };
 
     class Reverb
@@ -64,7 +64,7 @@ namespace lldsp::effects
     private:
         void UpdateParameters(double time, double amount);
 
-        Params m_Parameters = {
+        Params m_parameters = {
             // Time
             0.03,
             0.035,
@@ -82,13 +82,12 @@ namespace lldsp::effects
             0.5
         };
 
-        lldsp::dsp::CombFilter m_CombOne;
-        lldsp::dsp::CombFilter m_CombTwo;
-        lldsp::dsp::CombFilter m_CombThree;
-        lldsp::dsp::CombFilter m_CombFour;
+        lldsp::dsp::CombFilter m_combOne;
+        lldsp::dsp::CombFilter m_combTwo;
+        lldsp::dsp::CombFilter m_combThree;
+        lldsp::dsp::CombFilter m_combFour;
 
-        lldsp::dsp::AllPassFilter m_AllPassOne;
-        lldsp::dsp::AllPassFilter m_AllPassTwo;
+        lldsp::dsp::AllPassFilter m_allPassOne;
+        lldsp::dsp::AllPassFilter m_allPassTwo;
     };
-
 }
