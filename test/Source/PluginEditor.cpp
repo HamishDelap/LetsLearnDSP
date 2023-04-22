@@ -45,18 +45,7 @@ void SmallKnob::drawRotarySlider(Graphics& g, int x, int y, int width, int heigh
 TestAudioProcessorEditor::TestAudioProcessorEditor (TestAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p), nextFxButton("nextFx", 0.0, Colour(190, 190, 190)), prevFxButton("prevFx", 0.5, Colour(190, 190, 190))
 {
-    m_guiLang.Parse(std::filesystem::path("C:\\Users\\hamis\\Documents\\Dev\\AudioDevelopment\\LetsLearnDSP\\test\\Source\\test.gui"));
-    m_guiLang.Convert();
-
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
-    setSize (750, 900);
-
-    auto callback = [&](juce::Component& component) {
-        //addAndMakeVisible(component);
-    };
-    m_guiLang.Initialise(callback);
-
+    setSize(750, 900);
     LookAndFeel::setDefaultLookAndFeel(nullptr);
 
     Slider::TextEntryBoxPosition noDisplay = juce::Slider::TextEntryBoxPosition::NoTextBox;
@@ -79,7 +68,7 @@ TestAudioProcessorEditor::TestAudioProcessorEditor (TestAudioProcessor& p)
     bigKnob.setColour(Slider::ColourIds::backgroundColourId, Colour(0, 100, 0));
     bigKnob.setSliderStyle(juce::Slider::Rotary);
     bigKnob.setTextBoxStyle(noDisplay, false, 1, 1);
-    bigKnobAttachment = new AudioProcessorValueTreeState::SliderAttachment(audioProcessor.stateManager.apvt, "BIGKNOB", bigKnob);
+    bigKnobAttachment = new AudioProcessorValueTreeState::SliderAttachment(audioProcessor.m_stateManager.apvt, "BIGKNOB", bigKnob);
 
     addAndMakeVisible(leftKnob);
     leftKnob.setRange(-10.0, 10.0);
@@ -88,7 +77,7 @@ TestAudioProcessorEditor::TestAudioProcessorEditor (TestAudioProcessor& p)
     leftKnob.setColour(Slider::ColourIds::backgroundColourId, Colour(0, 100, 0));
     leftKnob.setSliderStyle(juce::Slider::Rotary);
     leftKnob.setTextBoxStyle(noDisplay, false, 1, 1);
-    leftKnobAttachment = new AudioProcessorValueTreeState::SliderAttachment(audioProcessor.stateManager.apvt, "LEFTKNOB", leftKnob);
+    leftKnobAttachment = new AudioProcessorValueTreeState::SliderAttachment(audioProcessor.m_stateManager.apvt, "LEFTKNOB", leftKnob);
 
     addAndMakeVisible(centerKnob);
     centerKnob.setRange(-10.0, 10.0);
@@ -97,7 +86,7 @@ TestAudioProcessorEditor::TestAudioProcessorEditor (TestAudioProcessor& p)
     centerKnob.setColour(Slider::ColourIds::backgroundColourId, Colour(0, 100, 0));
     centerKnob.setSliderStyle(juce::Slider::Rotary);
     centerKnob.setTextBoxStyle(noDisplay, false, 1, 1);
-    centerKnobAttachment = new AudioProcessorValueTreeState::SliderAttachment(audioProcessor.stateManager.apvt, "CENTERKNOB", centerKnob);
+    centerKnobAttachment = new AudioProcessorValueTreeState::SliderAttachment(audioProcessor.m_stateManager.apvt, "CENTERKNOB", centerKnob);
 
     addAndMakeVisible(rightKnob);
     rightKnob.setRange(-10.0, 10.0);
@@ -106,7 +95,7 @@ TestAudioProcessorEditor::TestAudioProcessorEditor (TestAudioProcessor& p)
     rightKnob.setColour(Slider::ColourIds::backgroundColourId, Colour(0, 100, 0));
     rightKnob.setSliderStyle(juce::Slider::Rotary);
     rightKnob.setTextBoxStyle(noDisplay, false, 1, 1);
-    rightKnobAttachment = new AudioProcessorValueTreeState::SliderAttachment(audioProcessor.stateManager.apvt, "RIGHTKNOB", rightKnob);
+    rightKnobAttachment = new AudioProcessorValueTreeState::SliderAttachment(audioProcessor.m_stateManager.apvt, "RIGHTKNOB", rightKnob);
 
     bigKnob.setLookAndFeel(&bigKnobLookAndFeel);
     leftKnob.setLookAndFeel(&smallKnobLookAndFeel);
@@ -122,6 +111,8 @@ TestAudioProcessorEditor::TestAudioProcessorEditor (TestAudioProcessor& p)
 
     addAndMakeVisible(dbgBtn);
     dbgBtn.onClick = [this] {dbgBtn.getToggleState() ? m_DebugWindow->setVisible(true) : m_DebugWindow->setVisible(false); };
+
+    //addAndMakeVisible(mainScreen);
 }
 
 TestAudioProcessorEditor::~TestAudioProcessorEditor()
@@ -138,13 +129,12 @@ void TestAudioProcessorEditor::paint (juce::Graphics& g)
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
 
-    juce::Image background = juce::ImageCache::getFromMemory(BinaryData::background2_png, BinaryData::background2_pngSize);
+    juce::Image background = juce::ImageCache::getFromMemory(BinaryData::background3_png, BinaryData::background3_pngSize);
     g.drawImageAt(background, 0, 0);
 }
 
 void TestAudioProcessorEditor::resized()
 {
-    m_guiLang.SetBounds();
     bigKnob.setBounds(223, 298, 305, 305);
 
     nextFxButton.setBounds(getWidth() - 200 - 30, 145, 30, 30);
@@ -156,6 +146,8 @@ void TestAudioProcessorEditor::resized()
     rightKnob.setBounds(532, 735, 120, 120);
 
     dbgBtn.setBounds(10, 10, 20, 20);
+
+    mainScreen.setTopLeftPosition(190, 90);
 }
 
 void TestAudioProcessorEditor::sliderValueChanged(Slider* slider) 
@@ -165,21 +157,25 @@ void TestAudioProcessorEditor::sliderValueChanged(Slider* slider)
 
 void TestAudioProcessorEditor::UpdateFxLabel()
 {
-    if (audioProcessor.m_Effects[audioProcessor.m_CurrentEffect] == TestAudioProcessor::Effect::Chorus)
+    if (audioProcessor.m_effects[audioProcessor.m_currentEffect] == TestAudioProcessor::Effect::Chorus)
     {
         fxLabel.setText("Chorus", juce::NotificationType::dontSendNotification);
     }
-    else if (audioProcessor.m_Effects[audioProcessor.m_CurrentEffect] == TestAudioProcessor::Effect::Delay)
+    else if (audioProcessor.m_effects[audioProcessor.m_currentEffect] == TestAudioProcessor::Effect::Delay)
     {
         fxLabel.setText("Delay", juce::NotificationType::dontSendNotification);
     }
-    else if (audioProcessor.m_Effects[audioProcessor.m_CurrentEffect] == TestAudioProcessor::Effect::Distortion)
+    else if (audioProcessor.m_effects[audioProcessor.m_currentEffect] == TestAudioProcessor::Effect::Distortion)
     {
         fxLabel.setText("Distortion", juce::NotificationType::dontSendNotification);
     }
-    else if (audioProcessor.m_Effects[audioProcessor.m_CurrentEffect] == TestAudioProcessor::Effect::Reverb)
+    else if (audioProcessor.m_effects[audioProcessor.m_currentEffect] == TestAudioProcessor::Effect::Reverb)
     {
         fxLabel.setText("Reverb", juce::NotificationType::dontSendNotification);
+    }
+    else if (audioProcessor.m_effects[audioProcessor.m_currentEffect] == TestAudioProcessor::Effect::Granular)
+    {
+        fxLabel.setText("Granular", juce::NotificationType::dontSendNotification);
     }
 }
 
@@ -187,14 +183,14 @@ void TestAudioProcessorEditor::buttonClicked(Button* button)
 {
     if (button == &nextFxButton)
     {
-        audioProcessor.m_CurrentEffect += 1;
-        if (audioProcessor.m_CurrentEffect > 3) { audioProcessor.m_CurrentEffect = 0; }
+        audioProcessor.m_currentEffect += 1;
+        if (audioProcessor.m_currentEffect > 4) { audioProcessor.m_currentEffect = 0; }
         UpdateFxLabel();
     }
     else if (button == &prevFxButton)
     {
-        audioProcessor.m_CurrentEffect -= 1;
-        if (audioProcessor.m_CurrentEffect < 0) { audioProcessor.m_CurrentEffect = 3; }
+        audioProcessor.m_currentEffect -= 1;
+        if (audioProcessor.m_currentEffect < 0) { audioProcessor.m_currentEffect = 4; }
         UpdateFxLabel();
     }
 }

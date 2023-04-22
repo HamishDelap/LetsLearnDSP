@@ -20,7 +20,7 @@ DebugEditor::DebugEditor(TestAudioProcessor& audioProcessor) : resetBtn("reset",
 	setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	addAndMakeVisible(pauseBtn);
-	pauseBtn.onClick = [this] { pauseBtn.getToggleState() ? m_audioProcessor->m_DebugProcessor.Pause() : m_audioProcessor->m_DebugProcessor.Resume(); };
+	pauseBtn.onClick = [this] { pauseBtn.getToggleState() ? m_audioProcessor->m_debugProcessor.Pause() : m_audioProcessor->m_debugProcessor.Resume(); };
  
 	addAndMakeVisible(muteBtn);
 	muteBtn.onClick = [this] { muteBtn.getToggleState() ? m_audioProcessor->mute() : m_audioProcessor->unmute(); };
@@ -46,30 +46,30 @@ DebugEditor::DebugEditor(TestAudioProcessor& audioProcessor) : resetBtn("reset",
 
 void DebugEditor::timerCallback()
 {
-	if (m_audioProcessor->m_DebugProcessor.nextFFTBlockReady) 
+	if (m_audioProcessor->m_debugProcessor.nextFFTBlockReady) 
 	{
-		m_audioProcessor->m_DebugProcessor.CalcNextDebugFrame();
-		m_audioProcessor->m_DebugProcessor.nextFFTBlockReady = false;
+		m_audioProcessor->m_debugProcessor.CalcNextDebugFrame();
+		m_audioProcessor->m_debugProcessor.nextFFTBlockReady = false;
 		repaint();
 	}
 }
 
 void DebugEditor::PaintWaveform(juce::Graphics& g, const int index)
 {
-	Line<float> line((float)jmap(index - 1, 0, m_audioProcessor->m_DebugProcessor.scopeSize - 1, 0, SPECTOGRAM_WIDTH),
-		jmap(m_audioProcessor->m_DebugProcessor.waveformScopeData[index - 1], -1.0f, 1.0f, 400.0f, 800.0f),
-		(float)jmap(index, 0, m_audioProcessor->m_DebugProcessor.scopeSize - 1, 0, SPECTOGRAM_WIDTH),
-		jmap(m_audioProcessor->m_DebugProcessor.waveformScopeData[index], -1.0f, 1.0f, 400.0f, 800.0f));
+	Line<float> line((float)jmap(index - 1, 0, m_audioProcessor->m_debugProcessor.scopeSize - 1, 0, SPECTOGRAM_WIDTH),
+		jmap(m_audioProcessor->m_debugProcessor.waveformScopeData[index - 1], -1.0f, 1.0f, 400.0f, 800.0f),
+		(float)jmap(index, 0, m_audioProcessor->m_debugProcessor.scopeSize - 1, 0, SPECTOGRAM_WIDTH),
+		jmap(m_audioProcessor->m_debugProcessor.waveformScopeData[index], -1.0f, 1.0f, 400.0f, 800.0f));
 
 	g.drawLine(line, 1.0f);
 }
 
 void DebugEditor::PaintSpectrum(juce::Graphics& g, const int index)
 {
-	Line<float> line((float)jmap(index - 1, 0, m_audioProcessor->m_DebugProcessor.scopeSize - 1, 0, SPECTOGRAM_WIDTH),
-		jmap(m_audioProcessor->m_DebugProcessor.spectrumScopeData[index - 1], 0.0f, 1.0f, (float)(SPECTOGRAM_HEIGHT), 0.0f),
-		(float)jmap(index, 0, m_audioProcessor->m_DebugProcessor.scopeSize - 1, 0, SPECTOGRAM_WIDTH),
-		jmap(m_audioProcessor->m_DebugProcessor.spectrumScopeData[index], 0.0f, 1.0f, (float)(SPECTOGRAM_HEIGHT), 0.0f));
+	Line<float> line((float)jmap(index - 1, 0, m_audioProcessor->m_debugProcessor.scopeSize - 1, 0, SPECTOGRAM_WIDTH),
+		jmap(m_audioProcessor->m_debugProcessor.spectrumScopeData[index - 1], 0.0f, 1.0f, (float)(SPECTOGRAM_HEIGHT), 0.0f),
+		(float)jmap(index, 0, m_audioProcessor->m_debugProcessor.scopeSize - 1, 0, SPECTOGRAM_WIDTH),
+		jmap(m_audioProcessor->m_debugProcessor.spectrumScopeData[index], 0.0f, 1.0f, (float)(SPECTOGRAM_HEIGHT), 0.0f));
 
 	g.drawLine(line, 1.0f);
 }
@@ -78,7 +78,7 @@ void DebugEditor::paint(juce::Graphics& g)
 {
 	g.setColour(juce::Colours::orange);
 
-	for (int i = 1; i < m_audioProcessor->m_DebugProcessor.scopeSize; ++i)
+	for (int i = 1; i < m_audioProcessor->m_debugProcessor.scopeSize; ++i)
 	{
 		PaintWaveform(g, i);
 		PaintSpectrum(g, i);

@@ -2,13 +2,37 @@
 #include "lldsp.h"
 #include "lldsp.utils.h"
 #include "lldsp.dsp.h"
+#include "lldsp.effects.granular.h"
 
 // Effects
 namespace lldsp::effects
 {
-    static double TanhDistortion(float sample, float gain)
+    static double TanhWaveshaper(double sample, double gain)
     {
         return std::tanh(sample * gain) / gain;
+    }
+
+    static double DafxDistortion(double sample, double gain)
+    {
+        sample *= gain;
+        double signPreservation = sample / std::abs(sample);
+        return signPreservation * (1 - std::exp(((sample * sample)) / std::abs(sample)));
+    }
+
+    static double Overdrive(double sample, double gain)
+    {
+        sample *= gain;
+        double absolute = std::abs(sample);
+
+        if (absolute < 0.333333333333)
+        {
+            return sample * 2;
+        }
+        else if (absolute < 0.6666666666)
+        {
+            return (3 - ((2 - 3 * sample) * (2 - 3 * sample))) / 3;
+        }
+        return sample;
     }
 
     class Chorus

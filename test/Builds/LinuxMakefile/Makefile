@@ -113,10 +113,12 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/GUILang_5e50d23f.o \
   $(JUCE_OBJDIR)/JUCEConverter_47369409.o \
   $(JUCE_OBJDIR)/Parser_f3563cf3.o \
+  $(JUCE_OBJDIR)/lldsp.effects.granular_644ed2a8.o \
   $(JUCE_OBJDIR)/lldsp.dsp_7dba516f.o \
   $(JUCE_OBJDIR)/lldsp.effects_473857b0.o \
   $(JUCE_OBJDIR)/lldsp.utils_311c6a1f.o \
   $(JUCE_OBJDIR)/JStateManager_a8703a21.o \
+  $(JUCE_OBJDIR)/MainScreen_c1b60e8e.o \
   $(JUCE_OBJDIR)/PluginProcessor_a059e380.o \
   $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o \
   $(JUCE_OBJDIR)/BinaryData_ce4232d4.o \
@@ -212,6 +214,11 @@ $(JUCE_OBJDIR)/Parser_f3563cf3.o: ../../../../UICfg/Parser.cpp
 	@echo "Compiling Parser.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/lldsp.effects.granular_644ed2a8.o: ../../../src/lldsp.effects.granular.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling lldsp.effects.granular.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/lldsp.dsp_7dba516f.o: ../../../src/lldsp.dsp.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling lldsp.dsp.cpp"
@@ -230,6 +237,11 @@ $(JUCE_OBJDIR)/lldsp.utils_311c6a1f.o: ../../../src/lldsp.utils.cpp
 $(JUCE_OBJDIR)/JStateManager_a8703a21.o: ../../../src/JStateManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling JStateManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MainScreen_c1b60e8e.o: ../../Source/MainScreen.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MainScreen.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PluginProcessor_a059e380.o: ../../Source/PluginProcessor.cpp

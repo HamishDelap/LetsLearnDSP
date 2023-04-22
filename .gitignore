@@ -55,3 +55,4 @@ test/check.bat
 test/JuceLibraryCode
 test/Builds/VisualStudio2019
 Assets/
+.project_alt.json

@@ -10,7 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include <GUILang.hpp>
+#include "MainScreen.h"
 #include "..\..\src\DbgEngine\DebugEditor.h"
 
 //==============================================================================
@@ -79,7 +79,7 @@ private:
 
     Label fxLabel;
 
-    GUILang m_guiLang;
+    MainScreenComponent mainScreen;
 
     ScopedPointer<ResizableWindow> m_DebugWindow;
     juce::Component m_DebugEditor;

@@ -63,28 +63,33 @@ public:
     void mute();
     void unmute();
 
-    JStateManager stateManager;
+    JStateManager m_stateManager;
 
     enum class Effect {
         Delay,
         Distortion,
         Chorus,
-        Reverb
+        Reverb,
+        Granular
     };
-    Effect m_Effects[4] = { Effect::Delay, Effect::Distortion, Effect::Chorus, Effect::Reverb };
-    int m_CurrentEffect = 0;
+    Effect m_effects[5] = { Effect::Delay, Effect::Distortion, Effect::Chorus, Effect::Reverb, Effect::Granular };
+    int m_currentEffect = 0;
 
-    DebugProcessor m_DebugProcessor;
+    DebugProcessor m_debugProcessor;
 
 private:
-    bool resetFlag = false;
-    bool muteFlag = false;
+    bool m_resetFlag = false;
+    bool m_muteFlag = false;
 
-    lldsp::effects::Chorus chorus;
-    lldsp::utils::RingBuffer delay;
-    lldsp::effects::Reverb reverb;
+    lldsp::effects::Chorus m_chorus;
+    lldsp::utils::RingBuffer m_delay;
+    lldsp::effects::Reverb m_reverb;
+    lldsp::effects::GranularDelayLine m_granularDelayLine;
+    std::vector<double> m_granularBuffer;
+    int m_currentGrain = 0;
+    int m_currentGrainSample = 0;
 
-    double m_Samplerate = 44100;
+    double m_samplerate = 44100;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestAudioProcessor)
 };

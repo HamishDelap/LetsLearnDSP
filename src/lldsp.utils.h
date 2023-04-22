@@ -1,5 +1,6 @@
 #pragma once
 #include "lldsp.h"
+#include <vector>
 
 // Utils
 namespace lldsp::utils
@@ -8,6 +9,15 @@ namespace lldsp::utils
     {
         double slope = (outEnd - outStart) / (inEnd - inStart);
         return outStart + slope * (input - inStart);
+    }
+
+    static void HanningWindow(std::vector<double>& data)
+    {
+        int N = data.size();
+        for (int n = 0; n < N; n++) {
+            double w = 0.5 - 0.5 * cos(2 * M_PI * n / (N - 1));
+            data[n] *= w;
+        }
     }
 
     class RingBuffer

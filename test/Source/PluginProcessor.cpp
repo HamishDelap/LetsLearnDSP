@@ -20,10 +20,10 @@ TestAudioProcessor::TestAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), stateManager(*this), chorus(), delay(44100)
+                       ), m_stateManager(*this), m_chorus(), m_delay(44100)
 #endif
 {
-    m_DebugProcessor;
+    m_debugProcessor;
 }
 
 TestAudioProcessor::~TestAudioProcessor()
@@ -97,16 +97,18 @@ void TestAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    m_Samplerate = sampleRate;
-    chorus = lldsp::effects::Chorus(sampleRate);
-    chorus.SetFrequency(0.25);
+    m_samplerate = sampleRate;
+    m_chorus = lldsp::effects::Chorus(sampleRate);
+    m_chorus.SetFrequency(0.25);
 
     double reverbTime = 0.1;
     // This needs to be turned into member function of reverb
 
-    reverb = lldsp::effects::Reverb(sampleRate);
+    m_reverb = lldsp::effects::Reverb(sampleRate);
+    m_delay = lldsp::utils::RingBuffer(sampleRate);
 
-    delay = lldsp::utils::RingBuffer(sampleRate);
+    m_granularDelayLine.SetGrainCount(30);
+    m_granularDelayLine.SetGrainSize(30, sampleRate);
 }
 
 void TestAudioProcessor::releaseResources()
@@ -143,17 +145,17 @@ bool TestAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) con
     
 void TestAudioProcessor::reset()
 {
-    resetFlag = true;
+    m_resetFlag = true;
 }
 
 void TestAudioProcessor::mute()
 {
-    muteFlag = true;
+    m_muteFlag = true;
 }
 
 void TestAudioProcessor::unmute()
 {
-    muteFlag = false;
+    m_muteFlag = false;
 }
 
 void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
@@ -184,61 +186,81 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
         auto* channelData = buffer.getWritePointer(1, 0);
         auto* leftChannelData = buffer.getWritePointer(0, 0);
 
-        if (m_Effects[m_CurrentEffect] == Effect::Chorus)
+        if (m_effects[m_currentEffect] == Effect::Chorus)
         {
-            float freq = static_cast<float>(stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
+            float freq = static_cast<float>(m_stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
 
-            chorus.SetFrequency(freq);
+            m_chorus.SetFrequency(freq);
 
-            double delayVal = chorus.Get();
+            double delayVal = m_chorus.Get();
             channelData[sample] = delayVal + channelData[sample];
 
-            chorus.Push(channelData[sample] * 0.75);
+            m_chorus.Push(channelData[sample] * 0.75);
             leftChannelData[sample] = channelData[sample];
         }
-        else if (m_Effects[m_CurrentEffect] == Effect::Distortion)
+        else if (m_effects[m_currentEffect] == Effect::Distortion)
         {
-            float gain = static_cast<float>(stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
+            double gain = static_cast<double>(m_stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
 
-            channelData[sample] = lldsp::effects::TanhDistortion(channelData[sample], gain);
+            //channelData[sample] = lldsp::effects::TanhDistortion(channelData[sample], gain);
+            channelData[sample] = lldsp::effects::Overdrive(channelData[sample], gain);
             leftChannelData[sample] = channelData[sample];
         }
-        else if (m_Effects[m_CurrentEffect] == Effect::Delay)
+        else if (m_effects[m_currentEffect] == Effect::Delay)
         {
-            float delayTime = static_cast<float>(stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
+            float delayTime = static_cast<float>(m_stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
 
-            delayTime = m_Samplerate * (delayTime / 10);
+            delayTime = m_samplerate * (delayTime / 10);
 
-            double delayVal = delay.Get(delayTime);
+            double delayVal = m_delay.Get(delayTime);
             channelData[sample] = delayVal + channelData[sample];
 
-            delay.Push(channelData[sample] * 0.75);
+            m_delay.Push(channelData[sample] * 0.75);
             leftChannelData[sample] = channelData[sample];
         }
-        else if (m_Effects[m_CurrentEffect] == Effect::Reverb)
+        else if (m_effects[m_currentEffect] == Effect::Reverb)
         {
-            float drywet = static_cast<float>(stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
-            float time = static_cast<float>(stateManager.apvt.getRawParameterValue("CENTERKNOB")->load());
-            channelData[sample] =reverb.Process(channelData[sample], time, drywet / 10);
+            float drywet = static_cast<float>(m_stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
+            float time = static_cast<float>(m_stateManager.apvt.getRawParameterValue("CENTERKNOB")->load());
+            channelData[sample] = m_reverb.Process(channelData[sample], time, drywet / 10);
             leftChannelData[sample] = channelData[sample];
+        }
+        else if (m_effects[m_currentEffect] == Effect::Granular)
+        {
+            try
+            {
+                float grainSize = static_cast<float>(m_stateManager.apvt.getRawParameterValue("RIGHTKNOB")->load());
+                float graindrywet = static_cast<float>(m_stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
+                float reverbdrywet = static_cast<float>(m_stateManager.apvt.getRawParameterValue("LEFTKNOB")->load());
+                float time = static_cast<float>(m_stateManager.apvt.getRawParameterValue("CENTERKNOB")->load());
+                m_granularDelayLine.SetGrainSize(jmap(grainSize, 0.0f, 10.0f, 10.0f, 100.0f), m_samplerate);
+                channelData[sample] = (channelData[sample] * (1.0 - (graindrywet / 10))) + (m_granularDelayLine.Process(channelData[sample]) * (graindrywet / 10));
+                channelData[sample] = m_reverb.Process(channelData[sample], time, reverbdrywet / 10);
+                leftChannelData[sample] = channelData[sample];
+            }
+            catch (std::exception ex)
+            {
+                channelData[sample] = 0;
+            }
         }
 
-        if (resetFlag || muteFlag)
+        if (m_resetFlag || m_muteFlag)
         {
             channelData[sample] = 0;
             leftChannelData[sample] = 0;
         }
 
-        m_DebugProcessor.PushNextSampleIntoFifo(channelData[sample]);
+        m_debugProcessor.PushNextSampleIntoFifo(channelData[sample]);
     }
     
-    if (resetFlag)
+    if (m_resetFlag)
     {
         // Reset Effects
-        chorus = lldsp::effects::Chorus(m_Samplerate);
-        reverb = lldsp::effects::Reverb(m_Samplerate);
-        delay = lldsp::utils::RingBuffer(m_Samplerate);
-        resetFlag = false;
+        m_chorus = lldsp::effects::Chorus(m_samplerate);
+        m_reverb = lldsp::effects::Reverb(m_samplerate);
+        m_delay = lldsp::utils::RingBuffer(m_samplerate);
+        //m_granularDelayLine = lldsp::effects::GranularDelayLine();
+        m_resetFlag = false;
     }
 }
 
