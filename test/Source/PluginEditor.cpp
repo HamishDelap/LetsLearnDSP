@@ -12,7 +12,7 @@
 #include <filesystem>
 
 void BigKnob::drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
-                                 const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider)
+                                const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider)
 {
     Image knob = ImageCache::getFromMemory(BinaryData::customKnob2Reel_png, BinaryData::customKnob2Reel_pngSize);
     int frameCount = knob.getHeight() / knob.getWidth();
@@ -27,7 +27,7 @@ void BigKnob::drawRotarySlider(Graphics& g, int x, int y, int width, int height,
 }
 
 void SmallKnob::drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
-    const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider)
+                                  const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider)
 {
     Image knob = ImageCache::getFromMemory(BinaryData::smallKnobReel_png, BinaryData::smallKnobReel_pngSize);
     int frameCount = knob.getHeight() / knob.getWidth();
@@ -58,7 +58,22 @@ TestAudioProcessorEditor::TestAudioProcessorEditor (TestAudioProcessor& p)
     addAndMakeVisible(fxLabel);
     fxLabel.setFont(juce::Font(24.0f, juce::Font::bold));
     fxLabel.setColour(juce::Label::textColourId, juce::Colours::whitesmoke);
-    UpdateFxLabel();
+    UpdateLabels();
+    
+    addAndMakeVisible(leftParamLabel);
+    leftParamLabel.setFont(juce::Font(24.0f, juce::Font::bold));
+    leftParamLabel.setColour(juce::Label::textColourId, juce::Colours::whitesmoke);
+    UpdateLabels();
+    
+    addAndMakeVisible(centerParamLabel);
+    centerParamLabel.setFont(juce::Font(24.0f, juce::Font::bold));
+    centerParamLabel.setColour(juce::Label::textColourId, juce::Colours::whitesmoke);
+    UpdateLabels();
+    
+    addAndMakeVisible(rightParamLabel);
+    rightParamLabel.setFont(juce::Font(24.0f, juce::Font::bold));
+    rightParamLabel.setColour(juce::Label::textColourId, juce::Colours::whitesmoke);
+    UpdateLabels();
 
     // Adding sliders
     addAndMakeVisible(bigKnob);
@@ -141,6 +156,10 @@ void TestAudioProcessorEditor::resized()
     prevFxButton.setBounds(200, 145, 30, 30);
     fxLabel.setBounds(250, 120, 100, 80);
 
+    leftParamLabel.setBounds(118, 660, 120, 40);
+    centerParamLabel.setBounds(317, 660, 120, 40);
+    rightParamLabel.setBounds(535, 660, 120, 40);
+
     leftKnob.setBounds(115, 735, 120, 120);
     centerKnob.setBounds(314, 735, 120, 120);
     rightKnob.setBounds(532, 735, 120, 120);
@@ -155,27 +174,36 @@ void TestAudioProcessorEditor::sliderValueChanged(Slider* slider)
     
 }
 
-void TestAudioProcessorEditor::UpdateFxLabel()
+void TestAudioProcessorEditor::UpdateLabels()
 {
+    std::string effectName = "";
     if (audioProcessor.m_effects[audioProcessor.m_currentEffect] == TestAudioProcessor::Effect::Chorus)
     {
-        fxLabel.setText("Chorus", juce::NotificationType::dontSendNotification);
+        effectName = "Chorus";
     }
     else if (audioProcessor.m_effects[audioProcessor.m_currentEffect] == TestAudioProcessor::Effect::Delay)
     {
-        fxLabel.setText("Delay", juce::NotificationType::dontSendNotification);
+        effectName = "Delay";
     }
     else if (audioProcessor.m_effects[audioProcessor.m_currentEffect] == TestAudioProcessor::Effect::Distortion)
     {
-        fxLabel.setText("Distortion", juce::NotificationType::dontSendNotification);
+        effectName = "Distortion";
     }
     else if (audioProcessor.m_effects[audioProcessor.m_currentEffect] == TestAudioProcessor::Effect::Reverb)
     {
-        fxLabel.setText("Reverb", juce::NotificationType::dontSendNotification);
+        effectName = "Reverb";
     }
     else if (audioProcessor.m_effects[audioProcessor.m_currentEffect] == TestAudioProcessor::Effect::Granular)
     {
-        fxLabel.setText("Granular", juce::NotificationType::dontSendNotification);
+        effectName = "Granular";
+    }
+    
+    if (!effectName.empty())
+    {
+        fxLabel.setText(effectName, juce::NotificationType::dontSendNotification);
+        leftParamLabel.setText(FX_LABELS.at(effectName)[0], juce::NotificationType::dontSendNotification);
+        centerParamLabel.setText(FX_LABELS.at(effectName)[1], juce::NotificationType::dontSendNotification);
+        rightParamLabel.setText(FX_LABELS.at(effectName)[2], juce::NotificationType::dontSendNotification);
     }
 }
 
@@ -185,12 +213,12 @@ void TestAudioProcessorEditor::buttonClicked(Button* button)
     {
         audioProcessor.m_currentEffect += 1;
         if (audioProcessor.m_currentEffect > 4) { audioProcessor.m_currentEffect = 0; }
-        UpdateFxLabel();
+        UpdateLabels();
     }
     else if (button == &prevFxButton)
     {
         audioProcessor.m_currentEffect -= 1;
         if (audioProcessor.m_currentEffect < 0) { audioProcessor.m_currentEffect = 4; }
-        UpdateFxLabel();
+        UpdateLabels();
     }
 }

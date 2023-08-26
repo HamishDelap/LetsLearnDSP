@@ -12,6 +12,7 @@
 #include "PluginProcessor.h"
 #include "MainScreen.h"
 #include "..\..\src\DbgEngine\DebugEditor.h"
+#include <unordered_map>
 
 //==============================================================================
 /**
@@ -34,6 +35,13 @@ public:
         const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider) override;
 };
 
+static const std::unordered_map<std::string, std::array<std::string, 3>> FX_LABELS = {
+    {"Chorus", {"-", "-", "-"}},
+    {"Distortion", {"-", "-", "-"}},
+    {"Reverb", {"-", "Length", "-"}},
+    {"Delay", {"-", "-", "-"}},
+    {"Granular", {"Reverb", "Time", "Size"}}
+};
 
 class TestAudioProcessorEditor : public AudioProcessorEditor, public Slider::Listener, public Button::Listener
 {
@@ -51,7 +59,7 @@ public:
     void buttonClicked(juce::Button* button) override;
 
 private:
-    void UpdateFxLabel();
+    void UpdateLabels();
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -78,6 +86,9 @@ private:
     BigKnob bigKnobLookAndFeel;
 
     Label fxLabel;
+    Label leftParamLabel;
+    Label centerParamLabel;
+    Label rightParamLabel;
 
     MainScreenComponent mainScreen;
 
