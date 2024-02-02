@@ -106,6 +106,7 @@ void TestAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 
     m_reverb = lldsp::effects::Reverb(sampleRate);
     m_delay = lldsp::utils::RingBuffer(sampleRate);
+    m_biQuad = lldsp::dsp::BiQuadFilter(sampleRate);
 
     m_granularDelayLine.SetGrainCount(30);
     m_granularDelayLine.SetGrainSize(30, sampleRate);
@@ -174,13 +175,6 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-
     for (auto sample = 0; sample < bufferNumSamples; ++sample)
     {
         auto* channelData = buffer.getWritePointer(1, 0);
@@ -201,9 +195,13 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
         else if (m_effects[m_currentEffect] == Effect::Distortion)
         {
             double gain = static_cast<double>(m_stateManager.apvt.getRawParameterValue("BIGKNOB")->load());
+            double Q = static_cast<float>(m_stateManager.apvt.getRawParameterValue("LEFTKNOB")->load());
 
             //channelData[sample] = lldsp::effects::TanhDistortion(channelData[sample], gain);
-            channelData[sample] = lldsp::effects::Overdrive(channelData[sample], gain);
+            //channelData[sample] = lldsp::effects::Overdrive(channelData[sample], gain);
+
+            m_biQuad.SetCutoff(gain * 1000, Q, 1);
+            channelData[sample] = m_biQuad.Process(channelData[sample]);
             leftChannelData[sample] = channelData[sample];
         }
         else if (m_effects[m_currentEffect] == Effect::Delay)
@@ -234,7 +232,8 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
                 float reverbdrywet = static_cast<float>(m_stateManager.apvt.getRawParameterValue("LEFTKNOB")->load());
                 float time = static_cast<float>(m_stateManager.apvt.getRawParameterValue("CENTERKNOB")->load());
                 m_granularDelayLine.SetGrainSize(jmap(grainSize, 0.0f, 10.0f, 10.0f, 100.0f), m_samplerate);
-                channelData[sample] = (channelData[sample] * (1.0 - (graindrywet / 10))) + (m_granularDelayLine.Process(channelData[sample]) * (graindrywet / 10));
+                channelData[sample] = (channelData[sample] * (1.0 - (graindrywet / 10)))
+                                      + (m_granularDelayLine.Process(channelData[sample]) * (graindrywet / 10));
                 channelData[sample] = m_reverb.Process(channelData[sample], time, reverbdrywet / 10);
                 leftChannelData[sample] = channelData[sample];
             }
@@ -259,6 +258,7 @@ void TestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
         m_chorus = lldsp::effects::Chorus(m_samplerate);
         m_reverb = lldsp::effects::Reverb(m_samplerate);
         m_delay = lldsp::utils::RingBuffer(m_samplerate);
+        m_biQuad = lldsp::dsp::BiQuadFilter(m_samplerate);
         //m_granularDelayLine = lldsp::effects::GranularDelayLine();
         m_resetFlag = false;
     }

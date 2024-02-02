@@ -85,6 +85,7 @@ private:
     lldsp::utils::RingBuffer m_delay;
     lldsp::effects::Reverb m_reverb;
     lldsp::effects::GranularDelayLine m_granularDelayLine;
+    lldsp::dsp::BiQuadFilter m_biQuad;
     std::vector<double> m_granularBuffer;
     int m_currentGrain = 0;
     int m_currentGrainSample = 0;

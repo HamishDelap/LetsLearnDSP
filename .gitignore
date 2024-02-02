@@ -49,6 +49,7 @@ test/run.bat
 test/vst.bat
 test/project.4coder
 test/build/
+test/Builds/
 remedy session.rdbg
 project.4coder
 test/check.bat
