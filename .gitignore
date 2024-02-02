@@ -55,5 +55,6 @@ project.4coder
 test/check.bat
 test/JuceLibraryCode
 test/Builds/VisualStudio2019
-Assets/
+Assets/knob-frames
+Assets/small-knob-frames
 .project_alt.json
