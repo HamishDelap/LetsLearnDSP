@@ -11,7 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "MainScreen.h"
-#include "..\..\src\DbgEngine\DebugEditor.h"
+#include "..\..\tools\DbgEngine\DebugEditor.h"
 #include <unordered_map>
 
 //==============================================================================

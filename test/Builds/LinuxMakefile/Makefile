@@ -108,8 +108,9 @@ OBJECTS_STANDALONE_PLUGIN := \
   $(JUCE_OBJDIR)/include_juce_audio_plugin_client_Standalone_1a871192.o \
 
 OBJECTS_SHARED_CODE := \
-  $(JUCE_OBJDIR)/DebugEditor_c00d7277.o \
-  $(JUCE_OBJDIR)/DebugProcessor_406c0d52.o \
+  $(JUCE_OBJDIR)/JStateManager_f48195ab.o \
+  $(JUCE_OBJDIR)/DebugEditor_119cc76e.o \
+  $(JUCE_OBJDIR)/DebugProcessor_771c80fb.o \
   $(JUCE_OBJDIR)/GUILang_5e50d23f.o \
   $(JUCE_OBJDIR)/JUCEConverter_47369409.o \
   $(JUCE_OBJDIR)/Parser_f3563cf3.o \
@@ -117,7 +118,6 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/lldsp.dsp_7dba516f.o \
   $(JUCE_OBJDIR)/lldsp.effects_473857b0.o \
   $(JUCE_OBJDIR)/lldsp.utils_311c6a1f.o \
-  $(JUCE_OBJDIR)/JStateManager_a8703a21.o \
   $(JUCE_OBJDIR)/MainScreen_c1b60e8e.o \
   $(JUCE_OBJDIR)/PluginProcessor_a059e380.o \
   $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o \
@@ -189,12 +189,17 @@ $(JUCE_OBJDIR)/include_juce_audio_plugin_client_Standalone_1a871192.o: ../../Juc
 	@echo "Compiling include_juce_audio_plugin_client_Standalone.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_STANDALONE_PLUGIN) $(JUCE_CFLAGS_STANDALONE_PLUGIN) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/DebugEditor_c00d7277.o: ../../../src/DbgEngine/DebugEditor.cpp
+$(JUCE_OBJDIR)/JStateManager_f48195ab.o: ../../../tools/StateManager/JStateManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling JStateManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/DebugEditor_119cc76e.o: ../../../tools/DbgEngine/DebugEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling DebugEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/DebugProcessor_406c0d52.o: ../../../src/DbgEngine/DebugProcessor.cpp
+$(JUCE_OBJDIR)/DebugProcessor_771c80fb.o: ../../../tools/DbgEngine/DebugProcessor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling DebugProcessor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
@@ -232,11 +237,6 @@ $(JUCE_OBJDIR)/lldsp.effects_473857b0.o: ../../../src/lldsp.effects.cpp
 $(JUCE_OBJDIR)/lldsp.utils_311c6a1f.o: ../../../src/lldsp.utils.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling lldsp.utils.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/JStateManager_a8703a21.o: ../../../src/JStateManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling JStateManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MainScreen_c1b60e8e.o: ../../Source/MainScreen.cpp

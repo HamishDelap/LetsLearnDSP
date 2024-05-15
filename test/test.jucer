@@ -4,13 +4,18 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               cppLanguageStandard="17" headerPath="&quot;C:\Users\hamis\Documents\Dev\AudioDevelopment\UICfg&quot;">
   <MAINGROUP id="v7EcJp" name="test">
-    <GROUP id="{095CFAB0-A759-3275-4185-06D2E40794A9}" name="DbgEngine">
-      <FILE id="LLvnvg" name="DebugEditor.cpp" compile="1" resource="0" file="../src/DbgEngine/DebugEditor.cpp"/>
-      <FILE id="wi86Sf" name="DebugEditor.h" compile="0" resource="0" file="../src/DbgEngine/DebugEditor.h"/>
-      <FILE id="Ej9juJ" name="DebugProcessor.cpp" compile="1" resource="0"
-            file="../src/DbgEngine/DebugProcessor.cpp"/>
-      <FILE id="ljiu7B" name="DebugProcessor.h" compile="0" resource="0"
-            file="../src/DbgEngine/DebugProcessor.h"/>
+    <GROUP id="{C5CBE82E-89CA-D767-2331-34AFA51DAB94}" name="StateManager">
+      <FILE id="nLtAl6" name="JStateManager.cpp" compile="1" resource="0"
+            file="../tools/StateManager/JStateManager.cpp"/>
+      <FILE id="Cum9sJ" name="JStateManager.h" compile="0" resource="0" file="../tools/StateManager/JStateManager.h"/>
+    </GROUP>
+    <GROUP id="{80876F46-0EF7-6F9D-69C5-193EB0003B86}" name="DbgEngine">
+      <FILE id="cyXvxj" name="DebugEditor.cpp" compile="1" resource="0" file="../tools/DbgEngine/DebugEditor.cpp"/>
+      <FILE id="VGEjX6" name="DebugEditor.h" compile="0" resource="0" file="../tools/DbgEngine/DebugEditor.h"/>
+      <FILE id="miGb0K" name="DebugProcessor.cpp" compile="1" resource="0"
+            file="../tools/DbgEngine/DebugProcessor.cpp"/>
+      <FILE id="eeIw7K" name="DebugProcessor.h" compile="0" resource="0"
+            file="../tools/DbgEngine/DebugProcessor.h"/>
     </GROUP>
     <GROUP id="{34057503-0AF1-56FF-9CE6-FB9A0C368AD4}" name="UICfg">
       <FILE id="KpWHvq" name="GUILang.cpp" compile="1" resource="0" file="../../UICfg/GUILang.cpp"/>
@@ -35,9 +40,6 @@
       <FILE id="ObLYjg" name="lldsp.utils.cpp" compile="1" resource="0" file="../src/lldsp.utils.cpp"/>
       <FILE id="NPF1u4" name="lldsp.effects.h" compile="0" resource="0" file="../src/lldsp.effects.h"/>
       <FILE id="KRaJpJ" name="lldsp.utils.h" compile="0" resource="0" file="../src/lldsp.utils.h"/>
-      <FILE id="lR409e" name="JStateManager.cpp" compile="1" resource="0"
-            file="../src/JStateManager.cpp"/>
-      <FILE id="Vumm84" name="JStateManager.h" compile="0" resource="0" file="../src/JStateManager.h"/>
       <FILE id="fBZgOo" name="lldsp.h" compile="0" resource="0" file="../src/lldsp.h"/>
       <FILE id="sRwnpe" name="SignalGenerator.h" compile="0" resource="0"
             file="../src/SignalGenerator.h"/>

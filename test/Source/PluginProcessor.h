@@ -12,9 +12,9 @@
 #include "..\..\src\lldsp.h"
 #include "..\..\src\lldsp.utils.h"
 #include "..\..\src\lldsp.effects.h"
-#include "..\..\src\JStateManager.h"
+#include "..\..\tools\StateManager\JStateManager.h"
 #include "..\..\src\SignalGenerator.h"
-#include "..\..\src\DbgEngine\DebugProcessor.h"
+#include "..\..\tools\DbgEngine\DebugProcessor.h"
 
 //==============================================================================
 /**
