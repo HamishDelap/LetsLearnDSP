@@ -11,6 +11,7 @@
 #define SPECTOGRAM_WIDTH 700
 
 using namespace juce;
+using namespace lldsp::debug;
 
 DebugEditor::DebugEditor(TestAudioProcessor& audioProcessor) : resetBtn("reset", 0.0, Colour(190, 190, 190))
 {

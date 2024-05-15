@@ -1,5 +1,7 @@
 #include "DebugProcessor.h"
 
+using namespace lldsp::debug;
+
 DebugProcessor::DebugProcessor() :fft(fftOrder), windowFunction(fftSize, juce::dsp::WindowingFunction<float>::hann)
 {
     DBG("Creating Spectrum Processor...");

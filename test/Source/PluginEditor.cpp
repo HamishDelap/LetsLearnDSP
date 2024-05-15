@@ -122,7 +122,7 @@ TestAudioProcessorEditor::TestAudioProcessorEditor (TestAudioProcessor& p)
     m_DebugWindow->setCentrePosition(400, 400);
     m_DebugWindow->setVisible(false);
     m_DebugWindow->setResizable(false, false);
-    m_DebugWindow->setContentOwned(new DebugEditor(audioProcessor), true); // maybe rename that to NewGUI or similar
+    m_DebugWindow->setContentOwned(new lldsp::debug::DebugEditor(audioProcessor), true); // maybe rename that to NewGUI or similar
 
     addAndMakeVisible(dbgBtn);
     dbgBtn.onClick = [this] {dbgBtn.getToggleState() ? m_DebugWindow->setVisible(true) : m_DebugWindow->setVisible(false); };

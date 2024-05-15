@@ -23,7 +23,6 @@ TestAudioProcessor::TestAudioProcessor()
                        ), m_stateManager(*this), m_chorus(), m_delay(44100)
 #endif
 {
-    m_debugProcessor;
 }
 
 TestAudioProcessor::~TestAudioProcessor()

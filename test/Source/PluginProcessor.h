@@ -75,7 +75,7 @@ public:
     Effect m_effects[5] = { Effect::Delay, Effect::Distortion, Effect::Chorus, Effect::Reverb, Effect::Granular };
     int m_currentEffect = 0;
 
-    DebugProcessor m_debugProcessor;
+    lldsp::debug::DebugProcessor m_debugProcessor;
 
 private:
     bool m_resetFlag = false;
