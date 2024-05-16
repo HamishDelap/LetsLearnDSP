@@ -1,45 +1,6 @@
-#include "lldsp.effects.h"
-#include "lldsp.utils.h"
+#include "lldsp.effects.reverb.h"
+#include "lldsp.dsp.h"
 
-// Chorus
-lldsp::effects::Chorus::Chorus(double sampleRate)
-{
-    m_delay = lldsp::utils::RingBuffer(sampleRate);
-    m_oscillator.SetSampleRate(sampleRate);
-}
-
-// Ring Buffer Wrappers
-void lldsp::effects::Chorus::Push(double item) 
-{
-    m_delay.Push(item);
-}
-
-double lldsp::effects::Chorus::Pop() 
-{
-    return m_delay.Pop();
-}
-
-double lldsp::effects::Chorus::Get()
-{
-    double index = m_oscillator.OscCycleWithFreq(m_frequency, 1);
-    index += 1;
-    index = lldsp::utils::mapRange(index, 0, 2, 408, 616);
-
-    return m_delay.Get(index);
-}
-
-void lldsp::effects::Chorus::SetFrequency(double freq)
-{
-    m_frequency = freq;
-}
-
-void lldsp::effects::Chorus::SetWaveform(lldsp::SignalGenerator::Waveforms waveform)
-{
-    m_oscillator.SetWaveform(waveform);
-}
-
-
-// Reverb
 lldsp::effects::Reverb::Reverb(double sampleRate)
 {
     m_combOne = lldsp::dsp::CombFilter(m_parameters.t1, m_parameters.g1, sampleRate);

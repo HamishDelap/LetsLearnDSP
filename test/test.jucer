@@ -29,20 +29,32 @@
       <FILE id="d4LDbR" name="structs.h" compile="0" resource="0" file="../../UICfg/structs.h"/>
     </GROUP>
     <GROUP id="{8A665A4F-C001-3DCF-0EF5-43CF474329B3}" name="LLDSP">
+      <FILE id="eKDBYA" name="lldsp.effects.chorus.cpp" compile="1" resource="0"
+            file="../src/lldsp.effects.chorus.cpp"/>
+      <FILE id="HQNnq8" name="lldsp.effects.chorus.h" compile="0" resource="0"
+            file="../src/lldsp.effects.chorus.h"/>
+      <FILE id="vMBVgM" name="lldsp.effects.distortion.cpp" compile="1" resource="0"
+            file="../src/lldsp.effects.distortion.cpp"/>
+      <FILE id="rzlLE3" name="lldsp.effects.distortion.h" compile="0" resource="0"
+            file="../src/lldsp.effects.distortion.h"/>
+      <FILE id="p1VgkH" name="lldsp.effects.reverb.cpp" compile="1" resource="0"
+            file="../src/lldsp.effects.reverb.cpp"/>
+      <FILE id="ZiK4Q9" name="lldsp.effects.reverb.h" compile="0" resource="0"
+            file="../src/lldsp.effects.reverb.h"/>
+      <FILE id="xJlng7" name="lldsp.oscillators.signalgenerator.cpp" compile="1"
+            resource="0" file="../src/lldsp.oscillators.signalgenerator.cpp"/>
+      <FILE id="F5IFVv" name="lldsp.oscillators.signalgenerator.h" compile="0"
+            resource="0" file="../src/lldsp.oscillators.signalgenerator.h"/>
       <FILE id="vJjdAj" name="lldsp.effects.granular.cpp" compile="1" resource="0"
             file="../src/lldsp.effects.granular.cpp"/>
       <FILE id="ZTwobr" name="lldsp.effects.granular.h" compile="0" resource="0"
             file="../src/lldsp.effects.granular.h"/>
       <FILE id="gUpepA" name="lldsp.dsp.cpp" compile="1" resource="0" file="../src/lldsp.dsp.cpp"/>
       <FILE id="cHCnZ8" name="lldsp.dsp.h" compile="0" resource="0" file="../src/lldsp.dsp.h"/>
-      <FILE id="CViNeJ" name="lldsp.effects.cpp" compile="1" resource="0"
-            file="../src/lldsp.effects.cpp"/>
       <FILE id="ObLYjg" name="lldsp.utils.cpp" compile="1" resource="0" file="../src/lldsp.utils.cpp"/>
       <FILE id="NPF1u4" name="lldsp.effects.h" compile="0" resource="0" file="../src/lldsp.effects.h"/>
       <FILE id="KRaJpJ" name="lldsp.utils.h" compile="0" resource="0" file="../src/lldsp.utils.h"/>
       <FILE id="fBZgOo" name="lldsp.h" compile="0" resource="0" file="../src/lldsp.h"/>
-      <FILE id="sRwnpe" name="SignalGenerator.h" compile="0" resource="0"
-            file="../src/SignalGenerator.h"/>
     </GROUP>
     <GROUP id="{D8EDF0B1-7DBD-81D4-1387-E0A87D750BC1}" name="Assets">
       <FILE id="mryKiV" name="background3.png" compile="0" resource="1" file="assets/background3.png"/>

@@ -13,7 +13,6 @@
 #include "..\..\src\lldsp.utils.h"
 #include "..\..\src\lldsp.effects.h"
 #include "..\..\tools\StateManager\JStateManager.h"
-#include "..\..\src\SignalGenerator.h"
 #include "..\..\tools\DbgEngine\DebugProcessor.h"
 
 //==============================================================================

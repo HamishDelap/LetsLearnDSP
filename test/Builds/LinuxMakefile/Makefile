@@ -114,9 +114,12 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/GUILang_5e50d23f.o \
   $(JUCE_OBJDIR)/JUCEConverter_47369409.o \
   $(JUCE_OBJDIR)/Parser_f3563cf3.o \
+  $(JUCE_OBJDIR)/lldsp.effects.chorus_ed6a5aae.o \
+  $(JUCE_OBJDIR)/lldsp.effects.distortion_947214a5.o \
+  $(JUCE_OBJDIR)/lldsp.effects.reverb_a253ccda.o \
+  $(JUCE_OBJDIR)/lldsp.oscillators.signalgenerator_53604e3e.o \
   $(JUCE_OBJDIR)/lldsp.effects.granular_644ed2a8.o \
   $(JUCE_OBJDIR)/lldsp.dsp_7dba516f.o \
-  $(JUCE_OBJDIR)/lldsp.effects_473857b0.o \
   $(JUCE_OBJDIR)/lldsp.utils_311c6a1f.o \
   $(JUCE_OBJDIR)/MainScreen_c1b60e8e.o \
   $(JUCE_OBJDIR)/PluginProcessor_a059e380.o \
@@ -219,6 +222,26 @@ $(JUCE_OBJDIR)/Parser_f3563cf3.o: ../../../../UICfg/Parser.cpp
 	@echo "Compiling Parser.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/lldsp.effects.chorus_ed6a5aae.o: ../../../src/lldsp.effects.chorus.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling lldsp.effects.chorus.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/lldsp.effects.distortion_947214a5.o: ../../../src/lldsp.effects.distortion.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling lldsp.effects.distortion.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/lldsp.effects.reverb_a253ccda.o: ../../../src/lldsp.effects.reverb.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling lldsp.effects.reverb.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/lldsp.oscillators.signalgenerator_53604e3e.o: ../../../src/lldsp.oscillators.signalgenerator.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling lldsp.oscillators.signalgenerator.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/lldsp.effects.granular_644ed2a8.o: ../../../src/lldsp.effects.granular.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling lldsp.effects.granular.cpp"
@@ -227,11 +250,6 @@ $(JUCE_OBJDIR)/lldsp.effects.granular_644ed2a8.o: ../../../src/lldsp.effects.gra
 $(JUCE_OBJDIR)/lldsp.dsp_7dba516f.o: ../../../src/lldsp.dsp.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling lldsp.dsp.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/lldsp.effects_473857b0.o: ../../../src/lldsp.effects.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling lldsp.effects.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/lldsp.utils_311c6a1f.o: ../../../src/lldsp.utils.cpp
