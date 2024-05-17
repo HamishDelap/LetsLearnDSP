@@ -29,6 +29,7 @@
       <FILE id="d4LDbR" name="structs.h" compile="0" resource="0" file="../../UICfg/structs.h"/>
     </GROUP>
     <GROUP id="{8A665A4F-C001-3DCF-0EF5-43CF474329B3}" name="LLDSP">
+      <FILE id="rtBcQP" name="lldsp.cpp" compile="1" resource="0" file="../src/lldsp.cpp"/>
       <FILE id="eKDBYA" name="lldsp.effects.chorus.cpp" compile="1" resource="0"
             file="../src/lldsp.effects.chorus.cpp"/>
       <FILE id="HQNnq8" name="lldsp.effects.chorus.h" compile="0" resource="0"

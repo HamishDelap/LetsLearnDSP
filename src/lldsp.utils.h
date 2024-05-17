@@ -5,6 +5,11 @@
 // Utils
 namespace lldsp::utils
 {
+    static double Interpolate(double distance, double timeInSeconds, double sampleRate)
+    {
+        return timeInSeconds > 0.0f ? (float)(distance / (timeInSeconds * sampleRate)) : -1.0f;
+    }
+
     static double mapRange(double input, double inStart, double inEnd, double outStart, double outEnd)
     {
         double slope = (outEnd - outStart) / (inEnd - inStart);

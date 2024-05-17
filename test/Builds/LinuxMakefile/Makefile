@@ -114,6 +114,7 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/GUILang_5e50d23f.o \
   $(JUCE_OBJDIR)/JUCEConverter_47369409.o \
   $(JUCE_OBJDIR)/Parser_f3563cf3.o \
+  $(JUCE_OBJDIR)/lldsp_5c84f9c.o \
   $(JUCE_OBJDIR)/lldsp.effects.chorus_ed6a5aae.o \
   $(JUCE_OBJDIR)/lldsp.effects.distortion_947214a5.o \
   $(JUCE_OBJDIR)/lldsp.effects.reverb_a253ccda.o \
@@ -220,6 +221,11 @@ $(JUCE_OBJDIR)/JUCEConverter_47369409.o: ../../../../UICfg/JUCEConverter.cpp
 $(JUCE_OBJDIR)/Parser_f3563cf3.o: ../../../../UICfg/Parser.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling Parser.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/lldsp_5c84f9c.o: ../../../src/lldsp.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling lldsp.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/lldsp.effects.chorus_ed6a5aae.o: ../../../src/lldsp.effects.chorus.cpp
