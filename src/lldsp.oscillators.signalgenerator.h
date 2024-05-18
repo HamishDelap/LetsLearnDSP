@@ -1,34 +1,28 @@
 #pragma once
 #include "lldsp.h"
+#include "lldsp.oscillators.h"
 
 namespace lldsp::oscillators
 {
-	enum class Waveforms
-	{
-		Sin,
-		Triangle,
-		Square
-	};
-
     class SignalGenerator
     {
     public:
         SignalGenerator();
-        SignalGenerator(double sampleRate, Waveforms wave);
+        SignalGenerator(double sampleRate, Waveform wave);
 
         void FreqToAngle(double frequency);
 
         double OscCycleWithFreq(double frequency, double level);
         double OscCycleWithAngle(double angle, double level);
 
-        void SetWaveform(Waveforms waveshape);
+        void SetWaveform(Waveform waveshape);
         void SetSampleRate(double samplerate);
 
     private:
         double currentAngle = {};
         double angleDelta = {};
         double localSampleRate = {};
-        Waveforms waveform = Waveforms::Sin;
+        Waveform waveform = Waveform::Sin;
         double value = {};
 
         double sineValue = 0;

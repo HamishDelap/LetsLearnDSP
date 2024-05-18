@@ -34,7 +34,7 @@ void lldsp::effects::Chorus::SetFrequency(double freq)
     m_frequency = freq;
 }
 
-void lldsp::effects::Chorus::SetWaveform(lldsp::oscillators::Waveforms waveform)
+void lldsp::effects::Chorus::SetWaveform(lldsp::oscillators::Waveform waveform)
 {
     m_oscillator.SetWaveform(waveform);
 }

@@ -13,15 +13,20 @@ namespace lldsp
 		CalculateRates();
 	}
 
+	bool ADSR::IsActive()
+	{
+		return m_state != State::Idle;
+	}
+
 	void ADSR::NoteOn()
 	{
 		if (m_attackRate > 0.0)
 		{
 			m_state = State::Attack;
 		}
-		else if (m_decayRate > 0.0f)
+		else if (m_decayRate > 0.0)
 		{
-			m_envelopeValue = 1.0f;
+			m_envelopeValue = 1.0;
 			m_state = State::Decay;
 		}
 		else
@@ -35,9 +40,9 @@ namespace lldsp
 	{
 		if (m_state != State::Idle)
 		{
-			if (m_parameters.release > 0.0f)
+			if (m_parameters.release > 0.0)
 			{
-				m_releaseRate = (float)(m_envelopeValue / (m_parameters.release * m_sampleRate));
+				m_releaseRate = (double)(m_envelopeValue / (m_parameters.release * m_sampleRate));
 				m_state = State::Release;
 			}
 			else
@@ -52,13 +57,16 @@ namespace lldsp
 		switch (m_state)
 		{
 		case State::Idle:
-			return 0.0;
+		{
+			m_envelopeValue = 0.0;
+			break;
+		}
 		case State::Attack:
 		{
 			m_envelopeValue += m_attackRate;
-			if (m_envelopeValue >= 1.0f)
+			if (m_envelopeValue >= 1.0)
 			{
-				m_envelopeValue = 1.0f;
+				m_envelopeValue = 1.0;
 				NextState();
 			}
 			break;
@@ -81,7 +89,7 @@ namespace lldsp
 		case State::Release:
 		{
 			m_envelopeValue -= m_releaseRate;
-			if (m_envelopeValue <= 0.0f)
+			if (m_envelopeValue <= 0.0)
 			{
 				NextState();
 			}
@@ -93,13 +101,13 @@ namespace lldsp
 
 	void ADSR::CalculateRates()
 	{
-		m_attackRate = lldsp::utils::Interpolate(1.0f, m_parameters.attack, m_sampleRate);
-		m_decayRate = lldsp::utils::Interpolate(1.0f - m_parameters.sustain, m_parameters.decay, m_sampleRate);
+		m_attackRate = lldsp::utils::Interpolate(1.0, m_parameters.attack, m_sampleRate);
+		m_decayRate = lldsp::utils::Interpolate(1.0 - m_parameters.sustain, m_parameters.decay, m_sampleRate);
 		m_releaseRate = lldsp::utils::Interpolate(m_parameters.sustain, m_parameters.release, m_sampleRate);
 
-		if ((m_state == State::Attack && m_attackRate <= 0.0f) ||
-			(m_state == State::Decay && (m_decayRate <= 0.0f || m_envelopeValue <= m_parameters.sustain)) ||
-			(m_state == State::Release && m_releaseRate <= 0.0f))
+		if ((m_state == State::Attack && m_attackRate <= 0.0) ||
+			(m_state == State::Decay && (m_decayRate <= 0.0 || m_envelopeValue <= m_parameters.sustain)) ||
+			(m_state == State::Release && m_releaseRate <= 0.0))
 		{
 			NextState();
 		}

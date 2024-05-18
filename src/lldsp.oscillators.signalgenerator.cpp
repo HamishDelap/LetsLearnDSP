@@ -5,12 +5,12 @@ namespace lldsp::oscillators
 	SignalGenerator::SignalGenerator()
 	{
 		localSampleRate = 1;
-		waveform = Waveforms::Sin;
+		waveform = Waveform::Sin;
 		currentAngle = 1;
 		value = 1;
 	}
 
-	SignalGenerator::SignalGenerator(double sampleRate, Waveforms wave)
+	SignalGenerator::SignalGenerator(double sampleRate, Waveform wave)
 	{
 		localSampleRate = sampleRate;
 		waveform = wave;
@@ -32,13 +32,13 @@ namespace lldsp::oscillators
 		sineValue = sin(currentAngle);
 		switch (waveform)
 		{
-		case Waveforms::Sin:
+		case Waveform::Sin:
 			value = sineValue;
 			break;
-		case Waveforms::Triangle:
+		case Waveform::Triangle:
 			value += (sineValue >= 0) ? triangleDelta : -triangleDelta;
 			break;
-		case Waveforms::Square:
+		case Waveform::Square:
 			value = (sineValue >= 0) ? 1 : -1;
 			break;
 		}
@@ -51,14 +51,14 @@ namespace lldsp::oscillators
 		sineValue = sin(angle);
 		switch (waveform)
 		{
-		case Waveforms::Sin:
+		case Waveform::Sin:
 			value = level * sineValue;
 			break;
-		case Waveforms::Triangle:
+		case Waveform::Triangle:
 			value += (sineValue >= 0) ? triangleDelta : -triangleDelta;
 			value = level * value;
 			break;
-		case Waveforms::Square:
+		case Waveform::Square:
 			value = (sineValue >= 0) ? 1 : -1;
 			value *= level;
 			break;
@@ -67,7 +67,7 @@ namespace lldsp::oscillators
 		return value;
 	}
 
-	void SignalGenerator::SetWaveform(Waveforms waveshape)
+	void SignalGenerator::SetWaveform(Waveform waveshape)
 	{
 		waveform = waveshape;
 	}

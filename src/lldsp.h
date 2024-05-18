@@ -34,6 +34,8 @@ namespace lldsp
 		void SetSampleRate(const double sampleRate);
 		void SetParameters(const Parameters& parameters);
 	
+		bool IsActive();
+
 		void NoteOn();
 		void NoteOff();
 
@@ -45,7 +47,7 @@ namespace lldsp
 		void Reset();
 
 		double m_sampleRate;
-		double m_envelopeValue;
+		double m_envelopeValue = 0;
 		State m_state;
 		Parameters m_parameters;
 

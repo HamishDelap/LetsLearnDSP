@@ -13,7 +13,7 @@ namespace lldsp::effects
         double Pop();
         double Get();
         void SetFrequency(double freq);
-        void SetWaveform(lldsp::oscillators::Waveforms waveform);
+        void SetWaveform(lldsp::oscillators::Waveform waveform);
 
     private:
         lldsp::utils::RingBuffer m_delay = lldsp::utils::RingBuffer(48000);
