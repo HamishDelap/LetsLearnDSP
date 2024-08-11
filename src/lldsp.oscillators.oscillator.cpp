@@ -1,7 +1,9 @@
 #include "lldsp.oscillators.oscillator.h"
 
 namespace lldsp::oscillators
-{	
+{
+	static double TWO_PI = 2 * M_PI;
+
 	void Oscillator::SetWaveForm(const Waveform& waveform)
 	{
 		m_waveform = waveform;
@@ -10,65 +12,55 @@ namespace lldsp::oscillators
 	void Oscillator::SetSampleRate(const double sampleRate)
 	{
 		m_samplerate = sampleRate;
-		m_deltaTime = 1.0f / sampleRate;
 	}
 
 	double Oscillator::Sample(const double frequency, const double level)
 	{
-		if (m_time >= std::numeric_limits<double>::max())
-		{
-			m_time = 0;
-		}
+		m_phase += TWO_PI * frequency / m_samplerate;
+
+		// Wrap phase to the range [0, 2PI]
+		m_phase = fmod(m_phase, TWO_PI);
 
 		double output = 0;
 		switch (m_waveform)
 		{
 		case Waveform::Sin:
 		{
-			output = level * sin(2 * M_PI * frequency * m_time + m_phase);
+			output = level * sin(m_phase);
 			break;
 		}
 		case Waveform::Square:
 		{
-			output = level * ((sin(2 * M_PI * frequency * m_time + m_phase)) >= 0.0 ? 1.0 : -1);
+			output = level * ((sin(m_phase)) >= 0.0 ? 1.0 : -1);
 			break;
 		}
 		case Waveform::Triangle:
 		{
-			double periodTime = 1.0 / frequency;
-			double localTime = fmod(m_time, periodTime);
-
-			double value = localTime / periodTime;
-			if (value < 0.25)
+			// Triangle wave
+			double value = 2.0 * (m_phase / (TWO_PI));
+			if (value < 1.0)
 			{
-				output = value * 4;
-			}
-			else if (value < 0.75)
-			{
-				output = 2.0 - (value * 4.0);
+				output = level * (2.0 * value - 1.0);  // Rising edge
 			}
 			else
 			{
-				output = value * 4 - 4.0;
+				output = level * (3.0 - 2.0 * value);  // Falling edge
 			}
 			break;
 		}
 		case Waveform::Sawtooth:
 		{
-			double periodTime = 1.0 / frequency;
-			double localTime = fmod(m_time, periodTime);
-			output = ((localTime / periodTime) * 2 - 1.0);
+			output = level * (2.0 * (m_phase / (TWO_PI)) - 1.0);
 			break;
 		}
 		}
 
-		m_time += m_deltaTime;
 		return output;
 	}
 
 	void Oscillator::Reset()
 	{
-		m_time = 0;
+		m_phase = 0;
 	}
 }
 
