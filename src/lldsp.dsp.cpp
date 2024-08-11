@@ -40,6 +40,11 @@ double lldsp::dsp::AllPassFilter::Process(double sample)
 }
 
 
+void lldsp::dsp::BiQuadFilter::SetSampleRate(double sampleRate)
+{
+	m_sampleRate = sampleRate;
+}
+
 double lldsp::dsp::BiQuadFilter::Process(double sample)
 {
 	double output = (sample * m_a0) + m_z1;

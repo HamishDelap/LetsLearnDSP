@@ -38,10 +38,23 @@ namespace lldsp::dsp
 	public:
 		BiQuadFilter() : m_sampleRate(44100) {}
 		BiQuadFilter(double sampleRate) : m_sampleRate(sampleRate) {}
-		
+	
+		void SetSampleRate(double sampleRate);
+
 		double Process(double sample);
 
 		void SetCutoff(double Fc, double Q, double peakGain);
+
+		void Reset()
+		{
+			m_z1 = 0;
+			m_z2 = 0;
+			m_a0 = 0.03641371651958762;
+			m_a1 = 0.07282743303917524;
+			m_a2 = 0.03641371651958762;
+			m_b1 = -1.4440155783021371;
+			m_b2 = 0.5896704443804874;
+		}
 
 	private:
 		double m_sampleRate;
