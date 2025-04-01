@@ -55,6 +55,7 @@ double lldsp::dsp::BiQuadFilter::Process(double sample)
 
 void lldsp::dsp::BiQuadFilter::SetCutoff(double Fc, double Q, double peakGain)
 {
+	if (Fc < 10) { Fc = 10; }
 	double norm;
 	double V = pow(10, abs(peakGain) / 20);
 	double K = tan(M_PI * Fc / m_sampleRate);
