@@ -19,7 +19,9 @@ namespace lldsp::oscillators
 		m_phase += TWO_PI * frequency / m_samplerate;
 
 		// Wrap phase to the range [0, 2PI]
-		m_phase = fmod(m_phase, TWO_PI);
+		// m_phase = fmod(m_phase, TWO_PI); <-- profiling found fmod caused a big issue
+		
+		if (m_phase >= TWO_PI) m_phase -= TWO_PI;
 
 		double output = 0;
 		switch (m_waveform)
