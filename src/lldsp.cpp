@@ -73,10 +73,9 @@ namespace lldsp
 		}
 		case State::Decay:
 		{
-			m_envelopeValue -= m_decayRate;
+			m_envelopeValue = std::max(m_envelopeValue - m_decayRate, m_parameters.sustain);
 			if (m_envelopeValue <= m_parameters.sustain)
 			{
-				m_envelopeValue = m_parameters.sustain;
 				NextState();
 			}
 			break;
@@ -88,7 +87,7 @@ namespace lldsp
 		}
 		case State::Release:
 		{
-			m_envelopeValue -= m_releaseRate;
+			m_envelopeValue = std::max(0.0, m_envelopeValue - m_releaseRate);
 			if (m_envelopeValue <= 0.0)
 			{
 				NextState();
@@ -99,11 +98,18 @@ namespace lldsp
 		return sample * m_envelopeValue;
 	}
 
+
+	// If decay == 0 then attackRate should be aiming for sustain level
+	// If attack == 0 then start at 0?
 	void ADSR::CalculateRates()
 	{
-		m_attackRate = lldsp::utils::Interpolate(1.0, m_parameters.attack, m_sampleRate);
+		m_attackRate = lldsp::utils::Interpolate(m_parameters.decay == 0 ? m_parameters.sustain : 1.0, m_parameters.attack, m_sampleRate);
 		m_decayRate = lldsp::utils::Interpolate(1.0 - m_parameters.sustain, m_parameters.decay, m_sampleRate);
 		m_releaseRate = lldsp::utils::Interpolate(m_parameters.sustain, m_parameters.release, m_sampleRate);
+
+		if (m_parameters.attack == 0.0) m_attackRate = 0.0;
+		if (m_parameters.decay == 0.0) m_decayRate = 0.0;
+		if (m_parameters.release == 0.0) m_releaseRate = 0.0;
 
 		if ((m_state == State::Attack && m_attackRate <= 0.0) ||
 			(m_state == State::Decay && (m_decayRate <= 0.0 || m_envelopeValue <= m_parameters.sustain)) ||
