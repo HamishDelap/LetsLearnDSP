@@ -12,7 +12,7 @@ namespace lldsp::effects
     {
         sample *= gain;
         double signPreservation = sample / std::abs(sample);
-        return signPreservation * (1 - std::exp(((sample * sample)) / std::abs(sample)));
+        return (signPreservation * (1 - std::exp(((sample * sample)) / std::abs(sample)))) * gain;
     }
 
     double Overdrive(double sample, double gain)
