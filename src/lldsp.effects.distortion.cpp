@@ -10,6 +10,7 @@ namespace lldsp::effects
 
     double DafxDistortion(double sample, double gain)
     {
+        if (sample == 0.0) { return 0; }
         sample *= gain;
         double signPreservation = sample / std::abs(sample);
         return (signPreservation * (1 - std::exp(((sample * sample)) / std::abs(sample)))) * gain;
