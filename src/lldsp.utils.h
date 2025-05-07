@@ -1,24 +1,24 @@
 #pragma once
-#include "lldsp.h"
+#include "lldsp.math.h"
 #include <vector>
 
 // Utils
 namespace lldsp::utils
 {
-    static double Interpolate(double distance, double timeInSeconds, double sampleRate)
+    [[maybe_unused]] static double Interpolate(double distance, double timeInSeconds, double sampleRate)
     {
         return timeInSeconds > 0.0f ? (float)(distance / (timeInSeconds * sampleRate)) : -1.0f;
     }
 
-    static double mapRange(double input, double inStart, double inEnd, double outStart, double outEnd)
+    [[maybe_unused]] static double MapRange(double input, double inStart, double inEnd, double outStart, double outEnd)
     {
         double slope = (outEnd - outStart) / (inEnd - inStart);
         return outStart + slope * (input - inStart);
     }
 
-    static void HanningWindow(std::vector<double>& data)
+    [[maybe_unused]] static void HanningWindow(std::vector<double>& data)
     {
-        int N = data.size();
+        int N = static_cast<int>(data.size());
         for (int n = 0; n < N; n++) {
             double w = 0.5 - 0.5 * cos(2 * M_PI * n / (N - 1));
             data[n] *= w;
@@ -29,6 +29,7 @@ namespace lldsp::utils
     {
     public:
         RingBuffer(int size);
+        RingBuffer(double size);
         void Push(double item);
         double Pop();
         double Get(int delaySamples);

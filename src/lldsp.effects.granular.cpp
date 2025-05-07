@@ -1,5 +1,6 @@
 #include "lldsp.effects.granular.h"
 #include "lldsp.utils.h"
+#include "lldsp.math.h"
 
 using namespace lldsp::effects;
 
@@ -16,12 +17,12 @@ int Grain::PushSample(const double& sample)
 {
 	m_vData.push_back(sample);
 	m_size = m_vData.size();
-	return m_size;
+	return static_cast<int>(m_vData.size());
 }
 
 int Grain::GetSize()
 {
-	return m_size;
+	return static_cast<int>(m_size);
 }
 
 void Grain::ApplyHanning()
@@ -57,7 +58,7 @@ void GranularDelayLine::SetGrainCount(int grainCount)
 
 void GranularDelayLine::SetGrainSize(int grainSize, int sampleRate)
 {
-	m_grainSize = (grainSize * 0.001) * sampleRate;
+	m_grainSize = static_cast<int>(std::floor(grainSize * 0.001) * sampleRate);
 }
 
 void GranularDelayLine::AddSample(double& sample)
@@ -79,7 +80,7 @@ int GranularDelayLine::PushGrain()
 		m_isFull = true;
 		m_grains.pop_front();
 	}
-	return m_grains.size();
+	return static_cast<int>(m_grains.size());
 }
 
 double GranularDelayLine::Process(double sample)

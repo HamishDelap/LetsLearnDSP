@@ -24,9 +24,9 @@ double lldsp::effects::Chorus::Get()
 {
     double index = m_oscillator.OscCycleWithFreq(m_frequency, 1);
     index += 1;
-    index = lldsp::utils::mapRange(index, 0, 2, 408, 616);
+    index = lldsp::utils::MapRange(index, 0, 2, 408, 616);
 
-    return m_delay.Get(index);
+    return m_delay.Get(static_cast<int>(std::floor(index)));
 }
 
 void lldsp::effects::Chorus::SetFrequency(double freq)

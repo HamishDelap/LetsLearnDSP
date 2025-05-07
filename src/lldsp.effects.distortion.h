@@ -1,8 +1,6 @@
 #pragma once
-#include "lldsp.h"
 #include "lldsp.utils.h"
 #include "lldsp.dsp.h"
-#include "lldsp.effects.granular.h"
 
 // Effects
 namespace lldsp::effects

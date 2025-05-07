@@ -1,13 +1,11 @@
 #include "lldsp.dsp.h"
-
-#include <math.h>
-#include <cmath>
+#include "lldsp.math.h"
 
 // CombFilter
 lldsp::dsp::CombFilter::CombFilter(double delayTime, double gain, double sampleRate) : m_DelayBuffer(sampleRate)
 {
 	m_Gain = gain;
-	m_SampleDelay = sampleRate * delayTime;
+	m_SampleDelay = static_cast<int>(sampleRate * delayTime);
 }
 
 double lldsp::dsp::CombFilter::Process(double sample)
@@ -24,7 +22,7 @@ double lldsp::dsp::CombFilter::Process(double sample)
 lldsp::dsp::AllPassFilter::AllPassFilter(double delayTime, double gain, double sampleRate) : m_DelayBuffer(sampleRate)
 {
 	m_Gain = gain;
-	m_SampleDelay = sampleRate * delayTime;
+	m_SampleDelay = static_cast<int>(sampleRate * delayTime);
 }
 
 double lldsp::dsp::AllPassFilter::Process(double sample)
@@ -53,7 +51,7 @@ double lldsp::dsp::BiQuadFilter::Process(double sample)
 	return output;
 }
 
-void lldsp::dsp::BiQuadFilter::SetCutoff(double Fc, double Q, double peakGain)
+void lldsp::dsp::BiQuadFilter::SetCutoff(double Fc, double Q, double)
 {
 	if (Fc < 10) { Fc = 10; }
 	double norm;

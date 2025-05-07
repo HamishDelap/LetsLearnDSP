@@ -19,7 +19,7 @@ namespace lldsp::effects
 		void Clear();
 	private:
 
-		int m_size = 0;
+		size_t m_size = 0;
 		GrainData m_vData;
 	};
 

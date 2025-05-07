@@ -1,6 +1,5 @@
 #pragma once
-#include "lldsp.h"
-#include "lldsp.oscillators.h"
+#include "lldsp.oscillators.waveforms.h"
 
 namespace lldsp::oscillators
 {

@@ -6,6 +6,12 @@ lldsp::utils::RingBuffer::RingBuffer(int size) : N(size)
     buffer = new double[size];
 }
 
+lldsp::utils::RingBuffer::RingBuffer(double size) : N(static_cast<int>(size))
+{
+    buffer = new double[static_cast<size_t>(size)];
+}
+
+
 void lldsp::utils::RingBuffer::Push(double item)
 {
     buffer[end++] = item;
@@ -40,7 +46,7 @@ double lldsp::utils::RingBuffer::Get(int delaySamples)
 // Get value using time in s
 double lldsp::utils::RingBuffer::Get(double delayTime, double samplerate)
 {
-    int delaySamples = samplerate / delayTime;
+    int delaySamples = static_cast<int>(std::floor(samplerate / delayTime));
     return Get(delaySamples);
 }
 

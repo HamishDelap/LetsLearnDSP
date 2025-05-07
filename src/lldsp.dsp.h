@@ -1,5 +1,6 @@
 #pragma once
 #include "lldsp.utils.h"
+#include "lldsp.dsp.adsr.h"
 
 namespace lldsp::dsp
 {

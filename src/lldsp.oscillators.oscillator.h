@@ -1,6 +1,5 @@
 #pragma once
-#include "lldsp.h"
-#include "lldsp.oscillators.h"
+#include "lldsp.oscillators.waveforms.h"
 
 namespace lldsp::oscillators
 {
@@ -19,5 +18,5 @@ namespace lldsp::oscillators
 		double m_samplerate;
 		Waveform m_waveform = Waveform::Sawtooth;
 	};
-		
+
 }

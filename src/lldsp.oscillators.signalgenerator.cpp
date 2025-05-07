@@ -1,4 +1,5 @@
 #include "lldsp.oscillators.signalgenerator.h"
+#include "lldsp.math.h"
 
 namespace lldsp::oscillators
 {

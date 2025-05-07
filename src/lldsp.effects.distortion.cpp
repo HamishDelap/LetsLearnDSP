@@ -1,5 +1,6 @@
 #include "lldsp.effects.h"
 #include "lldsp.utils.h"
+#include "lldsp.math.h"
 
 namespace lldsp::effects
 {
